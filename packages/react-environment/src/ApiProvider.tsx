@@ -21,6 +21,7 @@ export interface ApiContextData {
   connected: boolean;
   error: boolean;
   loading: boolean;
+  chain: string;
 }
 
 // ensure that api always exist
@@ -47,6 +48,7 @@ export const ApiProvider: FC<Props> = ({
     {} as ConnectStatus
   );
   const [api, setApi] = useState<ApiRx>({} as ApiRx);
+  const [chain, setChain] = useState<string>('');
 
   const renderContent = (): ReactNode => {
     if (connectStatus.loading) {
@@ -104,6 +106,14 @@ export const ApiProvider: FC<Props> = ({
   useEffect(() => {
     if (!connectStatus.connected) return;
 
+    api.rpc.system.chain().subscribe((result) => {
+      setChain(result.toString());
+    });
+  }, [api, connectStatus]);
+
+  useEffect(() => {
+    if (!connectStatus.connected) return;
+
     api.on('disconnected', () => {
       setConnectStatus({ connected: false, error: true, loading: false });
     });
@@ -118,6 +128,7 @@ export const ApiProvider: FC<Props> = ({
     <ApiContext.Provider
       value={{
         api,
+        chain,
         ...connectStatus
       }}
     >
