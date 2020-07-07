@@ -160,7 +160,6 @@ export const RedeemConsole: FC = () => {
     <Grid
       className={classes.root}
       container
-      direction='column'
     >
       <Grid item>
         <p className={classes.notice}>Withdraw deposit and interest</p>
@@ -219,21 +218,21 @@ export const RedeemConsole: FC = () => {
           Current Era = {stakingPoolHelper.currentEra} Unbounding Period = {formatDuration(unbondingDuration)} Days, Era {stakingPoolHelper.bondingDuration}
         </p>
       </Grid>
-      <Grid container
+      <Grid
+        container
         item
-        justify='center'>
-        <Grid item>
-          <TxButton
-            className={classes.txBtn}
-            disabled={checkDisabled()}
-            method='redeem'
-            onSuccess={form.resetForm}
-            params={getParams()}
-            section='homa'
-          >
-            Redeem
-          </TxButton>
-        </Grid>
+        justity='center'
+      >
+        <TxButton
+          className={classes.txBtn}
+          disabled={checkDisabled()}
+          method='redeem'
+          onSuccess={form.resetForm}
+          params={getParams()}
+          section='homa'
+        >
+          Redeem
+        </TxButton>
       </Grid>
       <Grid
         className={classes.info}

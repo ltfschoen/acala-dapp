@@ -87,7 +87,6 @@ export const StakingConsole: FC = () => {
     <Grid
       className={classes.root}
       container
-      direction='column'
     >
       <Grid item>
         <p className={classes.notice}>
@@ -106,7 +105,11 @@ export const StakingConsole: FC = () => {
           value={form.values.stakingBalance}
         />
       </Grid>
-      <Grid item>
+      <Grid
+        container
+        item
+        justity='center'
+      >
         <TxButton
           className={classes.txBtn}
           disabled={checkDisabled()}

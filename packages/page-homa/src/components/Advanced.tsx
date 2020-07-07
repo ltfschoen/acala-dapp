@@ -1,4 +1,4 @@
-import React, { FC, memo } from 'react';
+import React, { FC } from 'react';
 
 import { Grid } from '@acala-dapp/ui-components';
 
@@ -10,48 +10,44 @@ import { StakingPool } from './StakingPool';
 import { Transaction } from './Transaction';
 import { RedeemList } from './RedeemList';
 
-export const Liquid: FC = memo(() => {
+export const Advanced: FC = () => {
   return (
-    <Grid container
-      direction='column'>
+    <Grid container>
       <Grid item>
         <SelectToken />
       </Grid>
-      <Grid alignItems='stretch'
+      <Grid
         container
-        item>
-        <Grid item
-          xs={6}>
+        item
+      >
+        <Grid
+          item
+          span={12}
+        >
           <Console />
         </Grid>
-        <Grid item
-          xs={6}>
-          <Grid container>
-            <Grid item
-              xs={12}>
-              <StakingTokeBalances />
-            </Grid>
-            <Grid item
-              xs={12}>
-              <SystemInfo />
-            </Grid>
+        <Grid
+          container
+          item
+          span={12}
+        >
+          <Grid item>
+            <StakingTokeBalances />
+          </Grid>
+          <Grid item>
+            <SystemInfo />
           </Grid>
         </Grid>
       </Grid>
-      <Grid item
-        xs={12}>
+      <Grid item>
         <RedeemList />
       </Grid>
-      <Grid item
-        xs={12}>
+      <Grid item>
         <StakingPool />
       </Grid>
-      <Grid item
-        xs={12}>
+      <Grid item>
         <Transaction />
       </Grid>
     </Grid>
   );
-});
-
-Liquid.displayName = 'Liquid';
+};
