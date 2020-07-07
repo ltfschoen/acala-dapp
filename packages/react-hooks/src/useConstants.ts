@@ -16,6 +16,8 @@ interface HooksReturnType {
   nativeCurrency: CurrencyId;
   minmumDebitValue: Fixed18;
   stableCurrency: CurrencyId;
+  stakingCurrency: CurrencyId;
+  liquidCurrency: CurrencyId;
 }
 
 export const useConstants = (): HooksReturnType => {
@@ -50,14 +52,22 @@ export const useConstants = (): HooksReturnType => {
   // loan minmum debit value
   const minmumDebitValue = useMemo<Fixed18>(() => convertToFixed18(api.consts.cdpEngine.minimumDebitValue), [api]);
 
+  // staking currency
+  const stakingCurrency = useMemo(() => api.consts.stakingPool.stakingCurrencyId as Currency, [api]);
+
+  // liquid currency
+  const liquidCurrency = useMemo(() => api.consts.stakingPool.liquidCurrencyId as Currency, [api]);
+
   return {
     allCurrencies,
     dexBaseCurrency,
     dexCurrencies,
     expectedBlockTime,
+    liquidCurrency,
     loanCurrencies,
     minmumDebitValue,
     nativeCurrency,
-    stableCurrency
+    stableCurrency,
+    stakingCurrency
   };
 };

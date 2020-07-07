@@ -2,7 +2,7 @@ import React, { FC, ReactElement } from 'react';
 import clsx from 'clsx';
 
 import { useConstants } from '@acala-dapp/react-hooks';
-import { UserAssetBalance, UserAssetAmount, TotalUserAssetAmount, TokenImage, TokenName, TokenFullName, TransferButton } from '@acala-dapp/react-components';
+import { UserAssetBalance, UserAssetValue, TotalUserAssetValue, TokenImage, TokenName, TokenFullName, TransferButton } from '@acala-dapp/react-components';
 import { BareProps } from '@acala-dapp/ui-components/types';
 import { CurrencyId } from '@acala-network/types/interfaces';
 
@@ -12,7 +12,7 @@ const TotalAsset: FC<BareProps> = ({ className }) => {
   return (
     <div className={clsx(className, classes.totalAsset)}>
       <p>My Assets</p>
-      <TotalUserAssetAmount className={classes.num} />
+      <TotalUserAssetValue className={classes.num} />
     </div>
   );
 };
@@ -44,7 +44,7 @@ const AssetCard: FC<AssetCardProps> = ({ className, currency }) => {
             className={classes.currency}
             currency={currency}
           />
-          <UserAssetAmount
+          <UserAssetValue
             className={classes.amount}
             currency={currency}
             prefix='≈US$'

@@ -1,16 +1,16 @@
-import React, { FC, memo, FocusEventHandler, useState, ReactNode, ChangeEventHandler, useCallback, useMemo } from 'react';
+import React, { FC, FocusEventHandler, useState, ReactNode, ChangeEventHandler, useCallback, useMemo } from 'react';
 import clsx from 'clsx';
 import { FormikErrors } from 'formik';
 
 import { CurrencyId } from '@acala-network/types/interfaces';
 import { useApi } from '@acala-dapp/react-hooks';
 import { BareProps } from '@acala-dapp/ui-components/types';
+import { Button, Condition } from '@acala-dapp/ui-components';
 
-import { TokenName } from './Token';
+import { TokenName, TokenImage } from './Token';
 import { TokenSelector } from './TokenSelector';
 import { getCurrencyIdFromName } from './utils';
 import classes from './BalanceInput.module.scss';
-import { Button, Condition } from '@acala-dapp/ui-components';
 
 type BalanceInputSize = 'large' | 'middle';
 
@@ -33,12 +33,11 @@ export interface BalanceInputProps extends BareProps {
   showIcon?: boolean;
   size?: BalanceInputSize;
   onMax?: () => void;
-  withHover?: boolean;
-  withFocused?: boolean;
-  withError?: boolean;
+  border?: boolean;
 }
 
-export const BalanceInput: FC<BalanceInputProps> = memo(({
+export const BalanceInput: FC<BalanceInputProps> = ({
+  border = true,
   className,
   currencies,
   disabled = false,
@@ -57,10 +56,7 @@ export const BalanceInput: FC<BalanceInputProps> = memo(({
   size = 'large',
   token,
   tokenPosition = 'right',
-  value,
-  withError = true,
-  withFocused = true,
-  withHover = true
+  value
 }) => {
   const { api } = useApi();
   const [focused, setFocused] = useState<boolean>(false);
@@ -93,10 +89,10 @@ export const BalanceInput: FC<BalanceInputProps> = memo(({
           />
         )}
         or={(
-          <TokenName
-            className={classes.token}
-            currency={_token}
-          />
+          <div className={classes.token}>
+            <TokenImage currency={_token} />
+            <TokenName currency={_token} />
+          </div>
         )}
       />
     );
@@ -121,11 +117,11 @@ export const BalanceInput: FC<BalanceInputProps> = memo(({
     classes.root,
     classes[size],
     {
-      [classes.hover]: withHover,
-      [classes.error]: withError && !!error,
-      [classes.focused]: withFocused && focused
+      [classes.border]: border,
+      [classes.error]: !!error,
+      [classes.focused]: focused
     }
-  ), [className, error, focused, size, withError, withHover, withFocused]);
+  ), [className, error, focused, size, border]);
 
   return (
     <div className={rootClasses}>
@@ -160,6 +156,4 @@ export const BalanceInput: FC<BalanceInputProps> = memo(({
       <p className={clsx(classes.error, { [classes.show]: !!error })}>{error ? error.toString() : ''}</p>
     </div>
   );
-});
-
-BalanceInput.displayName = 'BalanceInput';
+};

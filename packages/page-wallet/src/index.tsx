@@ -12,8 +12,7 @@ const PageWallet: FC = () => {
     <Page>
       <Page.Title title='Wallet' />
       <Page.Content>
-        <Grid container
-          direction='column'>
+        <Grid container>
           <Grid item>
             <UserCard />
           </Grid>

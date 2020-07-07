@@ -26,9 +26,7 @@ export const FormatFixed18: FC<FormatFixed18Props> = ({
   primary = false,
   withTooltip = true
 }) => {
-  if (!data) {
-    return null;
-  }
+  data = data || Fixed18.ZERO;
 
   const getRenderText = (): string => {
     let _text = '';
@@ -61,7 +59,6 @@ export const FormatFixed18: FC<FormatFixed18Props> = ({
             [classes.primary]: primary
           }
         )
-
       }
     >
       {getRenderText()}

@@ -36,12 +36,12 @@ export const sideBarConfig: SideBarConfig = {
       icon: <GovernanceSVG />,
       name: 'Governance',
       path: 'governance'
-    },
-    {
-      icon: <LoanSVG />,
-      name: 'Loan Analysis',
-      path: 'anal/loan'
     }
+    // {
+    //   icon: <LoanSVG />,
+    //   name: 'Loan Analysis',
+    //   path: 'anal/loan'
+    // }
   ],
   socialMedia: [
     {

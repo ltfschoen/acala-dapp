@@ -3,7 +3,7 @@ import React, { FC, useMemo } from 'react';
 import AccountId from '@polkadot/types/generic/AccountId';
 import { CurrencyId } from '@acala-network/types/interfaces';
 
-import { useBalance, useAmount, useTotalAmount, usePrice } from '@acala-dapp/react-hooks';
+import { useBalance, useValue, useTotalValue, usePrice } from '@acala-dapp/react-hooks';
 
 import { FormatBalance, FormatFixed18, FormatFixed18Props, FormatBalanceProps } from './format';
 import { AccountLike, CurrencyLike } from '@acala-dapp/react-hooks/types';
@@ -35,23 +35,23 @@ export const UserAssetBalance: FC<UserAssetBalanceProps> = ({ account, currency,
   );
 };
 
-interface UserAssetAmountProps extends FormatFixed18Props{
+interface UserAssetValueProps extends FormatFixed18Props{
   account?: AccountId | string;
   quantity?: number;
   currency: CurrencyId | string;
 }
 
 /**
- * @name UserAssetAmount
+ * @name UserAssetValue
  * @description display user asset amount in USD
  */
-export const UserAssetAmount: FC<UserAssetAmountProps> = ({
+export const UserAssetValue: FC<UserAssetValueProps> = ({
   account,
   currency,
   prefix = '≈ US $',
   ...other
 }) => {
-  const amount = useAmount(currency, account);
+  const amount = useValue(currency, account);
 
   if (!amount) return null;
 
@@ -64,19 +64,19 @@ export const UserAssetAmount: FC<UserAssetAmountProps> = ({
   );
 };
 
-export interface TotalUserAssetAmountProps extends FormatFixed18Props {
+export interface TotalUserAssetValueProps extends FormatFixed18Props {
   account?: AccountId | string;
 }
 
 /**
- * @name TotalUserAssetAmount
+ * @name TotalUserAssetValue
  * @description display the total asset amount in USD
  */
-export const TotalUserAssetAmount: FC<TotalUserAssetAmountProps> = ({
+export const TotalUserAssetValue: FC<TotalUserAssetValueProps> = ({
   account,
   ...other
 }) => {
-  const amount = useTotalAmount(account);
+  const amount = useTotalValue(account);
 
   return (
     <FormatFixed18

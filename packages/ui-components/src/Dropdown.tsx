@@ -1,7 +1,10 @@
 import React, { memo, FC, ReactNode, useState, createRef, useEffect } from 'react';
 import clsx from 'clsx';
 
+import { Dropdown as AntDropdown } from 'antd';
+
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+
 import { ReactComponent as ArrowDownIcon } from './assets/arrow-down.svg';
 import { BareProps } from './types';
 import classes from './Dropdown.module.scss';

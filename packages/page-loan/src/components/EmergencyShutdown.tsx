@@ -18,7 +18,6 @@ export const Inner = (): JSX.Element => {
   return (
     <Grid
       container
-      direction='column'
     >
       <Grid item>
         <Card header={<p>Emergency Shutdown</p>}>

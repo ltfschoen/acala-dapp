@@ -22,9 +22,7 @@ const Inner: FC = () => {
           condition={isShutdown}
           match={<EmergencyShutdown/>}
           or={(
-            <Grid container
-              direction='column'>
-
+            <Grid container>
               <Condition
                 condition={currentTab !== 'create'}
                 match={
@@ -34,7 +32,7 @@ const Inner: FC = () => {
                 }
               />
 
-              <Grid item>
+              <Grid>
                 <WalletBalance />
               </Grid>
 

@@ -78,12 +78,12 @@ export const useAllBalances = (account?: AccountLike): BalanceData[] => {
 };
 
 /**
- * @name useAmount
- * @description get currency amount in USD
+ * @name useValue
+ * @description get currency value in USD
  * @param currency
  * @param account
  */
-export const useAmount = (currency: CurrencyId | string, account?: AccountLike): Fixed18 | undefined => {
+export const useValue = (currency: CurrencyId | string, account?: AccountLike): Fixed18 | undefined => {
   const balance = useBalance(currency, account);
   const price = usePrice(currency);
 
@@ -104,11 +104,11 @@ const calcTotalAmount = (prices: PriceData[], amount: BalanceData[]): Fixed18 =>
 };
 
 /**
- * @name useTotalAmount
- * @description get total amount inUSD of all currencies
+ * @name useTotalValue
+ * @description get total value in USD of all currencies
  * @param account
  */
-export const useTotalAmount = (account?: AccountLike): Fixed18 | undefined => {
+export const useTotalValue = (account?: AccountLike): Fixed18 | undefined => {
   const { allCurrencies } = useConstants();
   const balances = useBalances(allCurrencies, account);
   const prices = useAllPrices();
@@ -121,4 +121,10 @@ export const useTotalAmount = (account?: AccountLike): Fixed18 | undefined => {
   }, [balances, prices]);
 
   return result;
+};
+
+export const useIssuance = (asset: CurrencyLike): Fixed18 => {
+  const issuance = useCall<Balance>('query.tokens.totalIssuance', [asset]);
+
+  return issuance ? convertToFixed18(issuance) : Fixed18.ZERO;
 };

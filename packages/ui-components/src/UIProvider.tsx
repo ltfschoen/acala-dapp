@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 
+import 'antd/dist/antd.css';
 import './styles/index.scss';
 import './styles/global.css';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';

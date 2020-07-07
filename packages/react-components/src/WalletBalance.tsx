@@ -1,20 +1,22 @@
 import React, { FC, ReactNode } from 'react';
+import clsx from 'clsx';
 
 import { CurrencyId } from '@acala-network/types/interfaces';
 
 import { Card } from '@acala-dapp/ui-components';
 import { useConstants } from '@acala-dapp/react-hooks';
-import { TokenImage, TokenName, UserAssetBalance, UserAssetAmount } from '@acala-dapp/react-components';
+import { TokenImage, TokenName, UserAssetBalance, UserAssetValue } from '@acala-dapp/react-components';
 
 import classes from './WalletBalance.module.scss';
+import { BareProps } from '@acala-dapp/ui-components/types';
 
-interface BalanceProps {
+interface BalanceProps extends BareProps {
   currency: CurrencyId;
 }
 
-const Balance: FC<BalanceProps> = ({ currency }) => {
+export const Balance: FC<BalanceProps> = ({ className, currency }) => {
   return (
-    <div className={classes.item}>
+    <div className={clsx(classes.item, className)}>
       <TokenImage
         className={classes.image}
         currency={currency}
@@ -29,7 +31,7 @@ const Balance: FC<BalanceProps> = ({ currency }) => {
           currency={currency}
           decimalLength={2}
         />
-        <UserAssetAmount
+        <UserAssetValue
           className={classes.amount}
           currency={currency}
           prefix='≈ US $'

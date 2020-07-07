@@ -1,6 +1,6 @@
 import React, { FC, useContext } from 'react';
 import { upperFirst } from 'lodash';
-import { Tabs, TabConfig } from '@acala-dapp/ui-components';
+import { Tabs } from '@acala-dapp/ui-components';
 import { useCouncilList } from '@acala-dapp/react-hooks';
 import { governanceContext } from './provider';
 
@@ -8,22 +8,24 @@ export const CouncilSelector: FC = () => {
   const councilList = useCouncilList();
   const { setCouncilType } = useContext(governanceContext);
 
-  const tabsConfig: TabConfig[] = councilList.map((item: string) => {
-    return {
-      title: upperFirst(item),
-      value: item
-    };
-  });
-
-  const handleChange = (active: TabConfig): void => {
-    setCouncilType(active.value || '');
+  const handleChange = (active: string): void => {
+    console.log(active);
+    setCouncilType(active || '');
   };
 
   return (
     <Tabs
-      config={tabsConfig}
       onChange={handleChange}
-      style='button'
-    />
+      type='button'
+    >
+      {
+        councilList.map((item: string) => {
+          return (
+            <Tabs.Panel key={item}
+              tab={upperFirst(item)}/>
+          );
+        })
+      }
+    </Tabs>
   );
 };

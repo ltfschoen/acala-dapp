@@ -10,12 +10,13 @@ const PageWallet: FC = () => {
     <Page>
       <Page.Title title='Loan Analysis' />
       <Page.Content>
-        <Grid container
-          direction='column'>
-          <Grid item>
+        <Grid container>
+          <Grid span={6}>
             <TotalDebitAndCollateral />
           </Grid>
-          <CDPCOllateralRatio />
+          <Grid span={6}>
+            <CDPCOllateralRatio />
+          </Grid>
         </Grid>
       </Page.Content>
     </Page>
