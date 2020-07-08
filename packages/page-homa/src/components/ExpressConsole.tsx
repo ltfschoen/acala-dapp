@@ -1,10 +1,10 @@
 import React, { FC, useMemo, useCallback, useState, useRef } from 'react';
 import { noop } from 'lodash';
 
-import { Fixed18 } from '@acala-network/app-util';
+import { Fixed18, convertToFixed18 } from '@acala-network/app-util';
 import { Card, Tabs, NList } from '@acala-dapp/ui-components';
-import { TxButton, TwoWayBalanceInput, FormatBalance } from '@acala-dapp/react-components';
-import { useConstants, useStakingPoolHelper } from '@acala-dapp/react-hooks';
+import { TxButton, TwoWayBalanceInput, FormatBalance, eliminateGap } from '@acala-dapp/react-components';
+import { useConstants, useStakingPoolHelper, useBalance } from '@acala-dapp/react-hooks';
 
 import classes from './ExpressConsole.module.scss';
 
@@ -41,6 +41,7 @@ const StakePanel: FC = () => {
   const [amount, setAmount] = useState<number>(0);
   const resetForm = useRef<() => void>(noop);
   const [error, setError] = useState<boolean>(false);
+  const stakingCurrencyBalance = useBalance(stakingCurrency);
 
   const exchangeRate = useMemo<Fixed18>((): Fixed18 => {
     if (!helper) return Fixed18.ZERO;
@@ -49,8 +50,12 @@ const StakePanel: FC = () => {
   }, [helper]);
 
   const params = useMemo(() => {
-    return [Fixed18.fromNatural(amount).innerToString()];
-  }, [amount]);
+    if (!stakingCurrencyBalance) return [];
+
+    const _amount = eliminateGap(Fixed18.fromNatural(amount), convertToFixed18(stakingCurrencyBalance), Fixed18.fromNatural(0.000001));
+
+    return [_amount.innerToString()];
+  }, [amount, stakingCurrencyBalance]);
 
   const isDisabled = useMemo<boolean>((): boolean => {
     if (!amount) return true;
@@ -97,21 +102,33 @@ const StakePanel: FC = () => {
   );
 };
 
-const UnStakePanel: FC = () => {
+const UnstakePanel: FC = () => {
   const { liquidCurrency, stakingCurrency } = useConstants();
   const helper = useStakingPoolHelper();
   const [amount, setAmount] = useState<number>(0);
   const [error, setError] = useState<boolean>(false);
   const resetForm = useRef<() => void>(noop);
+  const liquidCurrencyBalance = useBalance(liquidCurrency);
+
   const exchangeRate = useMemo<Fixed18>((): Fixed18 => {
     if (!helper) return Fixed18.ZERO;
 
     return helper.liquidExchangeRate;
   }, [helper]);
 
+  const maxToUnstake = useMemo<Fixed18>((): Fixed18 => {
+    if (!helper) return Fixed18.ZERO;
+
+    return helper.communalFree.div(helper.liquidExchangeRate);
+  }, [helper]);
+
   const params = useMemo(() => {
-    return [Fixed18.fromNatural(amount).innerToString(), 'Immediately'];
-  }, [amount]);
+    if (!liquidCurrencyBalance) return [];
+
+    const _amount = eliminateGap(Fixed18.fromNatural(amount), convertToFixed18(liquidCurrencyBalance), Fixed18.fromNatural(0.000001));
+
+    return [_amount.innerToString(), 'Immediately'];
+  }, [amount, liquidCurrencyBalance]);
 
   const isDisabled = useMemo<boolean>((): boolean => {
     if (!amount) return true;
@@ -138,10 +155,20 @@ const UnStakePanel: FC = () => {
           exchangeRate={exchangeRate}
           exposeReset={(reset: () => void): void => { resetForm.current = reset; }}
           initCurrencies={[liquidCurrency, stakingCurrency]}
+          max={maxToUnstake.toNumber(6, 3)}
           onChange={setAmount}
           onError={setError}
         />
         <NList>
+          <NList.Item
+            label='Max To Unstake'
+            value={
+              <FormatBalance
+                balance={maxToUnstake}
+                currency={liquidCurrency}
+              />
+            }
+          />
           <NList.Item
             label='Price'
             value={<Price />}
@@ -188,7 +215,7 @@ export const ExpressConsole: FC = () => {
           key='unstake'
           tab='Unstake'
         >
-          <UnStakePanel />
+          <UnstakePanel />
         </Tabs.Panel>
       </Tabs>
     </Card>

@@ -123,3 +123,19 @@ export const formatDuration = (duration: number): number => {
 
   return Fixed18.fromRational(duration, DAY).toNumber(6, 2);
 };
+
+export const eliminateGap = (target: Fixed18, max: Fixed18, gap: Fixed18): Fixed18 => {
+  const _gap = target.sub(max);
+
+  // target is larger than max, but not lerge enough
+  if (_gap.isGreaterThan(Fixed18.ZERO) && _gap.isLessThan(gap)) {
+    return max;
+  }
+
+  // target is smaller than max, but not small enough.
+  if (_gap.isLessThan(Fixed18.ZERO) && _gap.negated().isLessThan(gap)) {
+    return max;
+  }
+
+  return target;
+};

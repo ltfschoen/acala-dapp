@@ -31,6 +31,7 @@ export const TwoWayBalanceInput: FC<TwoWayBalanceInputProps> = ({
   exchangeRate = Fixed18.ZERO,
   exposeReset,
   initCurrencies,
+  max,
   onChange,
   onError,
   swap = true
@@ -41,19 +42,29 @@ export const TwoWayBalanceInput: FC<TwoWayBalanceInputProps> = ({
   const [referenceCurrency] = useState<CurrencyLike>(initCurrencies[1]);
   const primaryCurrencyBalance = useBalance(primaryCurrency);
 
-  const referenceMax = useMemo<number>((): number => {
-    if (!primaryCurrencyBalance) return 0;
+  const primaryMax = useMemo<Fixed18>((): Fixed18 => {
+    const _primaryCurrencyBalance = convertToFixed18(primaryCurrencyBalance || Fixed18.ZERO);
 
-    return convertToFixed18(primaryCurrencyBalance).mul(exchangeRate).toNumber(6, 3);
-  }, [primaryCurrencyBalance, exchangeRate]);
+    if (max === undefined) return _primaryCurrencyBalance;
+
+    const _max = Fixed18.fromNatural(max);
+
+    return _max.min(_primaryCurrencyBalance);
+  }, [max, primaryCurrencyBalance]);
+
+  const referenceMax = useMemo<Fixed18>((): Fixed18 => {
+    if (!primaryMax) return Fixed18.ZERO;
+
+    return primaryMax.mul(exchangeRate);
+  }, [primaryMax, exchangeRate]);
 
   const validator = useFormValidator({
     primary: {
-      currency: primaryCurrency,
-      type: 'balance'
+      max: primaryMax.toNumber(6, 3),
+      type: 'number'
     },
     reference: {
-      max: referenceMax,
+      max: referenceMax.toNumber(6, 3),
       type: 'number'
     }
   });
@@ -93,16 +104,22 @@ export const TwoWayBalanceInput: FC<TwoWayBalanceInputProps> = ({
   }, [setDirection, direction, form]);
 
   const handlePrimaryMax = useCallback(() => {
-    if (!primaryCurrencyBalance) return;
+    if (!primaryMax) return;
 
-    form.setFieldValue('primary', convertToFixed18(primaryCurrencyBalance).toNumber(6, 3));
-  }, [primaryCurrencyBalance, form]);
+    form.setValues({
+      primary: primaryMax.toNumber(6, 3),
+      reference: primaryMax.mul(exchangeRate).toNumber(6, 3)
+    });
+  }, [primaryMax, form, exchangeRate]);
 
   const handleReferenceMax = useCallback(() => {
     if (!referenceMax) return;
 
-    form.setFieldValue('reference', referenceMax);
-  }, [referenceMax, form]);
+    form.setValues({
+      primary: primaryMax.toNumber(6, 3),
+      reference: referenceMax.toNumber(6, 3)
+    });
+  }, [referenceMax, form, primaryMax]);
 
   const handlePrimaryChange: ChangeEventHandler<HTMLInputElement> = useCallback((event) => {
     const value = Number(event.target.value);

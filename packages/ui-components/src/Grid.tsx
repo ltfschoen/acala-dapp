@@ -59,6 +59,7 @@ export const Grid: FC<GridProps> = ({
           align={align}
           gutter={gutter}
           justify={justity}
+          style={{ marginBottom: -gutter[1] / 2 }}
         >
           {children}
         </Row>

@@ -223,16 +223,18 @@ export const RedeemConsole: FC = () => {
         item
         justity='center'
       >
-        <TxButton
-          className={classes.txBtn}
-          disabled={checkDisabled()}
-          method='redeem'
-          onSuccess={form.resetForm}
-          params={getParams()}
-          section='homa'
-        >
-          Redeem
-        </TxButton>
+        <Grid item>
+          <TxButton
+            className={classes.txBtn}
+            disabled={checkDisabled()}
+            method='redeem'
+            onSuccess={form.resetForm}
+            params={getParams()}
+            section='homa'
+          >
+            Redeem
+          </TxButton>
+        </Grid>
       </Grid>
       <Grid
         className={classes.info}
