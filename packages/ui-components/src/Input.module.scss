@@ -7,15 +7,18 @@
   height: 48px;
   padding: 0 16px;
   background: #ffffff;
-  border: 1px solid #cccccc;
   border-radius: 2px;
   transition: border-color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
 
-  &.hover:hover, &.focused {
+  &.border {
+    border: 1px solid #cccccc;
+  }
+
+  &:hover, &.focused {
     border-color: #173dc9;
   }
 
-  &.hover:hover .suffix polyline {
+  &:hover .suffix polyline {
     stroke: #173dc9;
   }
 

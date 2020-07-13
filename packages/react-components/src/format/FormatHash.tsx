@@ -1,7 +1,6 @@
 import React, { FC, ReactNode } from 'react';
-import Tooltip from '@material-ui/core/Tooltip';
 
-import { Copy } from '@acala-dapp/ui-components';
+import { Copy, Tooltip, Condition } from '@acala-dapp/ui-components';
 
 import { formatHash } from '../utils';
 
@@ -23,23 +22,26 @@ export const FormatHash: FC<Props> = ({
   withTooltip = true
 }) => {
   const renderInner = (): ReactNode => {
-    if (withTooltip) {
-      return (
-        <Tooltip
-          arrow
-          placement='left'
-          title={hash}
-        >
-          {
-            withPScan ? <a href={getPScanUrl(hash)}
+    return (
+      <Tooltip
+        placement='top'
+        show={withTooltip}
+        title={hash}
+      >
+        <span>
+          <Condition
+            condition={withPScan}
+            or={formatHash(hash)}
+          >
+            <a
+              href={getPScanUrl(hash)}
               rel='noopener noreferrer'
-              target='_blank'>{formatHash(hash)}</a> : <span>{formatHash(hash)}</span>
-          }
-        </Tooltip>
-      );
-    }
-
-    return <span>formatHash(hash)</span>;
+              target='_blank'>{formatHash(hash)}
+            </a>
+          </Condition>
+        </span>
+      </Tooltip>
+    );
   };
 
   return (

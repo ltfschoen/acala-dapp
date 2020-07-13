@@ -1,14 +1,13 @@
 import React, { FC, useRef, ReactElement } from 'react';
 import { compose, curry, placeholder } from 'lodash/fp';
 import clsx from 'clsx';
-import Tooltip from '@material-ui/core/Tooltip';
 
 import { Balance as BalanceType } from '@polkadot/types/interfaces';
 import { Fixed18 } from '@acala-network/app-util';
 
 import { CurrencyId } from '@acala-network/types/interfaces';
 import { BareProps } from '@acala-dapp/ui-components/types';
-import { randomID, Condition } from '@acala-dapp/ui-components';
+import { randomID, Tooltip } from '@acala-dapp/ui-components';
 
 import { formatBalance, getTokenName, thousand, effectiveDecimal } from '../utils';
 import classes from './format.module.scss';
@@ -21,18 +20,20 @@ export interface BalancePair {
 export interface FormatBalanceProps extends BareProps {
   balance?: BalanceType | Fixed18 | number;
   currency?: CurrencyId | string;
-  decimalLength?: number;
   pair?: BalancePair[];
   pairSymbol?: string;
   primary?: boolean;
   withTooltip?: boolean;
+  effectiveDecimalLength?: number;
+  maxDecimalLength?: number;
 }
 
 export const FormatBalance: FC<FormatBalanceProps> = ({
   balance,
   className,
   currency,
-  decimalLength = 2,
+  effectiveDecimalLength = 2,
+  maxDecimalLength = 6,
   pair,
   pairSymbol,
   primary = false,
@@ -45,7 +46,7 @@ export const FormatBalance: FC<FormatBalanceProps> = ({
     const _noop = (i: any): any => i;
 
     const _transform = compose(
-      curry(effectiveDecimal)(placeholder, decimalLength),
+      curry(effectiveDecimal)(placeholder, effectiveDecimalLength, maxDecimalLength),
       usethousand ? thousand : _noop
     );
 
@@ -61,8 +62,12 @@ export const FormatBalance: FC<FormatBalanceProps> = ({
     );
   };
 
-  const renderInner = (): JSX.Element => {
-    return (
+  return (
+    <Tooltip
+      placement='topRight'
+      show={withTooltip}
+      title={pair ? pair.map((data, index) => renderBalance(data, index, true)) : renderBalance({ balance, currency }, -1, true)}
+    >
       <span
         className={
           clsx(
@@ -75,19 +80,6 @@ export const FormatBalance: FC<FormatBalanceProps> = ({
       >
         {pair ? pair.map((data, index) => renderBalance(data, index, true)) : renderBalance({ balance, currency }, -1, true)}
       </span>
-    );
-  };
-
-  return (
-    <Condition condition={withTooltip}
-      or={renderInner}
-    >
-      <Tooltip
-        placement='left'
-        title={pair ? pair.map((data, index) => renderBalance(data, index, true)) : renderBalance({ balance, currency }, -1, true)}
-      >
-        {renderInner()}
-      </Tooltip>
-    </Condition>
+    </Tooltip>
   );
 };

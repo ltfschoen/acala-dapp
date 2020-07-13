@@ -3,11 +3,10 @@ import React, { FC, useMemo } from 'react';
 import { Fixed18 } from '@acala-network/app-util';
 import { useStakingPoolHelper, useConstants } from '@acala-dapp/react-hooks';
 
-import { FormatBalance, BalancePair } from './format';
-import { BareProps } from '@acala-dapp/ui-components/types';
+import { FormatBalance, BalancePair, FormatBalanceProps } from './format';
 import { tokenEq } from './utils';
 
-export interface StakingPoolExchangeRateProps extends BareProps {
+export interface StakingPoolExchangeRateProps extends FormatBalanceProps {
   stakingAmount?: Fixed18;
   liquidAmount?: Fixed18;
   showStakingAmount?: boolean;

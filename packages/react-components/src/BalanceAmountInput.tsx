@@ -177,6 +177,7 @@ export const BalanceAmountInput: FC<BalanceAmountInputProps> = ({
         </Condition>
         <Condition condition={inputType === 'amount'}>
           <Input
+            border={false}
             className={classes.amountInput}
             error={form.errors.amount}
             id='amount'
@@ -189,11 +190,9 @@ export const BalanceAmountInput: FC<BalanceAmountInputProps> = ({
             }
             type='number'
             value={form.values.amount}
-            withError={false}
-            withFocuse={false}
-            withHover={false}
           />
           <BalanceInput
+            border={false}
             className={classes.balanceDisplay}
             disabled
             enableTokenSelect
@@ -201,9 +200,6 @@ export const BalanceAmountInput: FC<BalanceAmountInputProps> = ({
             showIcon={false}
             token={currency}
             value={displayBalance.toNumber()}
-            withError={false}
-            withFocused={false}
-            withHover={false}
           />
         </Condition>
       </div>

@@ -41,26 +41,20 @@ export const AccountProvider: FC<Props> = memo(({
   const { getStorage, setStorage } = useStorage({ useAccountPrefix: false });
   const { close, open, status } = useModal(false);
 
-  const loadAccounts = useCallback(async (): Promise<boolean> => {
+  const loadAccounts = useCallback(async (): Promise<InjectedAccountWithMeta[]> => {
     const injected = await web3Enable(applicationName);
 
     if (!injected.length) {
-      setError('NO_EXTENSIONS');
-
-      return false;
+      throw new Error('NO_EXTENSIONS');
     }
 
     const accounts = await web3Accounts();
 
     if (!accounts.length) {
-      setError('NO_ACCOUNTS');
-
-      return false;
+      throw new Error('NO_ACCOUNTS');
     }
 
-    setAccounts(accounts);
-
-    return true;
+    return accounts;
   }, [applicationName]);
 
   const setActiveAccount = useCallback(async (account: InjectedAccountWithMeta): Promise<void> => {
@@ -76,40 +70,36 @@ export const AccountProvider: FC<Props> = memo(({
     }
   }, [api, setActive, setReady, setStorage]);
 
-  const openSelectAccount = useCallback((): void => {
-    open();
-  }, [open]);
-
-  const closeSelectAccount = useCallback((): void => {
-    close();
-  }, [close]);
-
   useEffect(() => {
-    loadAccounts();
-  }, [loadAccounts]);
+    loadAccounts()
+      .then(async (accounts) => {
+        setAccounts(accounts);
 
-  useEffect(() => {
-    if (!accounts.length || active) {
-      return;
-    }
+        if (!accounts.length || active) {
+          return;
+        }
 
-    // check saved active account
-    const savedActiveAccountAddress = getStorage(ACTIVE_ACCOUNT_KEY);
-    const savedActiveAccount = accounts.find((item): boolean => item.address === savedActiveAccountAddress);
+        // check saved active account
+        const savedActiveAccountAddress = getStorage(ACTIVE_ACCOUNT_KEY);
+        const savedActiveAccount = accounts.find((item): boolean => item.address === savedActiveAccountAddress);
 
-    if (savedActiveAccount) {
-      setActiveAccount(savedActiveAccount);
-    } else if (accounts.length === 1) {
-      setActiveAccount(accounts[0]);
-    } else {
-      openSelectAccount();
-    }
-  }, [accounts, active, getStorage, openSelectAccount, setActiveAccount]);
+        if (savedActiveAccount) {
+          await setActiveAccount(savedActiveAccount);
+        } else if (accounts.length === 1) {
+          await setActiveAccount(accounts[0]);
+        } else {
+          open();
+        }
+      })
+      .catch((e: Error) => {
+        setError(e.toString() as AccountProviderError);
+      });
+  }, [loadAccounts, setError, active, getStorage, open, setActiveAccount]);
 
-  const handleAccountSelect = async (account: InjectedAccountWithMeta): Promise<void> => {
+  const handleAccountSelect = useCallback(async (account: InjectedAccountWithMeta): Promise<void> => {
     await setActiveAccount(account);
-    closeSelectAccount();
-  };
+    close();
+  }, [setActiveAccount, close]);
 
   const renderError = useCallback((): ReactNode => {
     if (error && error === 'NO_ACCOUNTS' && NoAccounts) {
@@ -128,14 +118,15 @@ export const AccountProvider: FC<Props> = memo(({
       value={{
         accounts,
         active,
-        closeSelectAccount,
+        closeSelectAccount: close,
         error,
-        openSelectAccount,
+        openSelectAccount: open,
         ready
       }}
     >
       <SelectAccount
         accounts={accounts}
+        defaultAccount={active ? active.address : undefined}
         onSelect={handleAccountSelect}
         visable={status}
       />

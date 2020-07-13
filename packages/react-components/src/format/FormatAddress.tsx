@@ -1,10 +1,12 @@
-import React, { FC, memo, ReactNode } from 'react';
+import React, { FC, memo, ReactNode, useMemo } from 'react';
 
 import { BareProps } from '@acala-dapp/ui-components/types';
 import { Copy } from '@acala-dapp/ui-components';
 import Identicon from '@polkadot/react-identicon';
 
 import classes from './format.module.scss';
+
+const LAMINAR = '5CLaminarAUSDCrossChainTransferxxxxxxxxxxxxxwisu';
 
 interface Props extends BareProps {
   address: string;
@@ -22,6 +24,18 @@ export const FormatAddress: FC<Props> = memo(({
   withFullAddress = false,
   withIcon = false
 }) => {
+  const _address = useMemo<string>((): string => {
+    if (address === LAMINAR) {
+      return 'Laminar';
+    }
+
+    if (withFullAddress) {
+      return address;
+    }
+
+    return address.replace(/(\w{6})\w*?(\w{6}$)/, '$1......$2');
+  }, [address, withFullAddress]);
+
   return (
     <Copy
       className={className}
@@ -36,7 +50,7 @@ export const FormatAddress: FC<Props> = memo(({
                 value={address}
               />
             ) : null }
-            {withFullAddress ? address : address.replace(/(\w{6})\w*?(\w{6}$)/, '$1......$2')}
+            {_address}
           </>
         );
       }}

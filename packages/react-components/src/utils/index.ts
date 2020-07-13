@@ -33,7 +33,7 @@ export const padDecimalPlaces = (origin: number | string, dp: number): string =>
   return [i, d].join('.');
 };
 
-export const effectiveDecimal = (origin: number | string, dp: number): string => {
+export const effectiveDecimal = (origin: number | string, dp: number, maxDecimalLength: number): string => {
   let _origin = origin.toString();
 
   // transfer scientific notation to number
@@ -60,6 +60,12 @@ export const effectiveDecimal = (origin: number | string, dp: number): string =>
 
       return acc + cur;
     }, '');
+  }
+
+  d = d.slice(0, maxDecimalLength);
+
+  if (d === '0'.repeat(maxDecimalLength)) {
+    d = '00';
   }
 
   return [i, d].join('.');

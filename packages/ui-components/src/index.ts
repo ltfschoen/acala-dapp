@@ -24,3 +24,4 @@ export * from './Status';
 export * from './Condition';
 export * from './Chart';
 export * from './List';
+export * from './Tooltip';

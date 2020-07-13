@@ -6,6 +6,7 @@ import { Condition } from './Condition';
 import { Button } from './Button';
 
 export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'prefix'> {
+  border?: boolean;
   inputClassName?: string;
   error?: string | string[] | any;
   size?: 'small' | 'large' | 'normal';
@@ -13,12 +14,10 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
   prefix?: ReactNode;
   showMaxBtn?: boolean;
   onMax?: () => void;
-  withHover?: boolean;
-  withError?: boolean;
-  withFocuse?: boolean;
 }
 
 export const Input: FC<InputProps> = ({
+  border = true,
   className,
   error,
   inputClassName,
@@ -27,9 +26,6 @@ export const Input: FC<InputProps> = ({
   showMaxBtn = false,
   size = 'normal',
   suffix,
-  withError = true,
-  withFocuse = true,
-  withHover = true,
   ...other
 }) => {
   const [focused, setFocused] = useState<boolean>(false);
@@ -54,9 +50,9 @@ export const Input: FC<InputProps> = ({
           className,
           classes[size],
           {
-            [classes.hover]: withHover,
-            [classes.focused]: withFocuse && focused,
-            [classes.error]: withError && error
+            [classes.border]: border,
+            [classes.focused]: focused,
+            [classes.error]: error
           }
         )
       }

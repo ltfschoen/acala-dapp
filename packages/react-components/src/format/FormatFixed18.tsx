@@ -1,9 +1,9 @@
 import React, { FC, ReactElement } from 'react';
 import clsx from 'clsx';
-import Tooltip from '@material-ui/core/Tooltip';
 
 import { Fixed18 } from '@acala-network/app-util';
 import { BareProps } from '@acala-dapp/ui-components/types';
+import { Tooltip } from '@acala-dapp/ui-components';
 
 import { thousand, effectiveDecimal } from '../utils';
 import classes from './format.module.scss';
@@ -15,6 +15,7 @@ export interface FormatFixed18Props extends BareProps {
   primary?: boolean;
   withTooltip?: boolean;
   effectiveDecimalLength?: number;
+  maxDecimalLength?: number;
 }
 
 export const FormatFixed18: FC<FormatFixed18Props> = ({
@@ -22,13 +23,14 @@ export const FormatFixed18: FC<FormatFixed18Props> = ({
   data,
   effectiveDecimalLength = 2,
   format = 'thousand',
+  maxDecimalLength = 6,
   prefix,
   primary = false,
   withTooltip = true
 }) => {
-  data = data || Fixed18.ZERO;
+  const _data = (data || Fixed18.ZERO);
 
-  const getRenderText = (): string => {
+  const getRenderText = (data: Fixed18): string => {
     let _text = '';
 
     if (!data.isFinity()) {
@@ -36,11 +38,11 @@ export const FormatFixed18: FC<FormatFixed18Props> = ({
     }
 
     if (format === 'number') {
-      _text = effectiveDecimal(data.toString(18, 3), effectiveDecimalLength);
+      _text = effectiveDecimal(data.toString(18, 3), effectiveDecimalLength, maxDecimalLength);
     }
 
     if (format === 'thousand') {
-      _text = effectiveDecimal(thousand(data.toNumber(18, 3)), effectiveDecimalLength);
+      _text = effectiveDecimal(thousand(data.toNumber(18, 3)), effectiveDecimalLength, maxDecimalLength);
     }
 
     if (format === 'percentage') {
@@ -50,32 +52,24 @@ export const FormatFixed18: FC<FormatFixed18Props> = ({
     return `${prefix || ''}${_text}`;
   };
 
-  const inner = (): ReactElement => (
-    <span
-      className={
-        clsx(
-          className,
-          {
-            [classes.primary]: primary
-          }
-        )
-      }
+  return (
+    <Tooltip
+      placement='topRight'
+      show={withTooltip}
+      title={_data.toString(18, 3)}
     >
-      {getRenderText()}
-    </span>
-  );
-
-  if (withTooltip) {
-    return (
-      <Tooltip
-        arrow
-        placement='left'
-        title={data.toString(18, 3)}
+      <span
+        className={
+          clsx(
+            className,
+            {
+              [classes.primary]: primary
+            }
+          )
+        }
       >
-        {inner()}
-      </Tooltip>
-    );
-  }
-
-  return inner();
+        {getRenderText(_data)}
+      </span>
+    </Tooltip>
+  );
 };

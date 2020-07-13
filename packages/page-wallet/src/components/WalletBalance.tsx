@@ -58,6 +58,7 @@ const AssetCard: FC<AssetCardProps> = ({ className, currency }) => {
               />
             }>
             <StakingPoolExchangeRate
+              className={classes.amount}
               liquidAmount={liquidBalance}
               showLiquidAmount={false}
             />
