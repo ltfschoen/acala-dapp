@@ -1,4 +1,4 @@
-import React, { FC, useContext, useCallback, ReactNode } from 'react';
+import React, { FC, useContext, useCallback, useMemo } from 'react';
 import { noop } from 'lodash';
 import { useFormik } from 'formik';
 
@@ -33,39 +33,21 @@ export const StakingConsole: FC = () => {
     form.resetForm();
   }, [form]);
 
+  const receivedLiquidToken = useMemo<Fixed18>((): Fixed18 => {
+    if (!stakingPoolHelper || !form.values.stakingBalance) return Fixed18.ZERO;
+
+    return stakingPoolHelper.convertToLiquid(Fixed18.fromNatural(form.values.stakingBalance));
+  }, [stakingPoolHelper, form.values.stakingBalance]);
+
+  const profit = useMemo<Fixed18>((): Fixed18 => {
+    if (!rewardRate || !form.values.stakingBalance) return Fixed18.ZERO;
+
+    return Fixed18.fromNatural(form.values.stakingBalance).mul(convertToFixed18(rewardRate || 0));
+  }, [rewardRate, form.values.stakingBalance]);
+
   if (!stakingPoolHelper || !stakingPool) {
     return null;
   }
-
-  const estimated = {
-    depositStakingToken: Fixed18.fromNatural(form.values.stakingBalance).mul(convertToFixed18(rewardRate || 0)),
-    receivedLiquidToken: stakingPoolHelper.convertToLiquid(Fixed18.fromNatural(form.values.stakingBalance))
-  };
-
-  const listConfig = [
-    {
-      key: 'receivedLiquidToken',
-      /* eslint-disable-next-line react/display-name */
-      render: (value: Fixed18): ReactNode => (
-        value.isFinity() ? (<FormatBalance
-          balance={value}
-          currency={stakingPool.liquidCurrency}
-        />) : '~'
-      ),
-      title: 'Mint'
-    },
-    {
-      key: 'depositStakingToken',
-      /* eslint-disable-next-line react/display-name */
-      render: (value: Fixed18): ReactNode => (
-        value.isFinity() ? (<FormatBalance
-          balance={value}
-          currency={stakingPool.stakingCurrency}
-        />) : '~'
-      ),
-      title: 'Estimated Profit / Era'
-    }
-  ];
 
   const checkDisabled = (): boolean => {
     if (!form.values.stakingBalance) {
@@ -125,11 +107,26 @@ export const StakingConsole: FC = () => {
         </Grid>
       </Grid>
       <Grid item>
-        <List
-          config={listConfig}
-          data={estimated}
-          itemClassName={classes.listItem}
-        />
+        <List>
+          <List.Item
+            label='Mint'
+            value={
+              <FormatBalance
+                balance={receivedLiquidToken}
+                currency={stakingPool.liquidCurrency}
+              />
+            }
+          />
+          <List.Item
+            label='Estimated Profit / Era'
+            value={
+              <FormatBalance
+                balance={profit}
+                currency={stakingPool.stakingCurrency}
+              />
+            }
+          />
+        </List>
       </Grid>
     </Grid>
   );

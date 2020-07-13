@@ -57,6 +57,7 @@ function extractEvents (api: ApiRx, result: SubmittableResult, createNotificatio
           type: 'error'
         });
       } else {
+        console.log(section, method, data.toString());
         createNotification({
           removedDelay: 4000,
           title: `${section}.${method}`,
@@ -129,6 +130,8 @@ export const TxButton: FC<PropsWithChildren<Props>> = ({
       take(1),
       switchMap((signedTx: SubmittableExtrinsic<'rxjs'>) => {
         const hash = signedTx.hash.toString();
+
+        signedTx.paymentInfo(active.address).subscribe((result) => console.log(result.toString()));
 
         notification = createNotification({
           content: <FormatAddress address={hash} />,

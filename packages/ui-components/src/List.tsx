@@ -1,56 +1,46 @@
-import React, { FC, ReactNode, memo } from 'react';
-import clsx from 'clsx';
-
-import classes from './List.module.scss';
+import React, { ReactNode, FC } from 'react';
 import { BareProps } from './types';
+import clsx from 'clsx';
+import './List.scss';
 
-type ListData = {
-  [k in string]: any
+type ListStyle = 'list';
+
+interface ItemProps extends BareProps {
+  label: string | ReactNode;
+  value: string | ReactNode;
 }
 
-export interface ListConfig {
-  key: string;
-  title: string;
-  render: (data: any, index: number) => ReactNode;
-}
-
-interface Props extends BareProps {
-  config: ListConfig[];
-  data: ListData | null;
-  itemClassName?: string;
-  labelClassName?: string;
-  dataClassName?: string;
-}
-
-export const List: FC<Props> = memo(({
+const Item: FC<ItemProps> = ({
   className,
-  config,
-  data,
-  dataClassName,
-  itemClassName,
-  labelClassName,
+  label,
+  value
 }) => {
-  if (!data) return null;
-
   return (
-    <ul className={clsx(classes.root, className)}>
-      {
-        config.map((_config, index): ReactNode => {
-          const { key } = _config;
+    <li className={clsx('aca-list__item', className)}>
+      <div>{label}</div>
+      <div>{value}</div>
+    </li>
+  );
+};
 
-          return (
-            <li
-              className={clsx(classes.listItem, itemClassName)}
-              key={`list-${key}-${index}`}
-            >
-              <div className={clsx(classes.labelValue, labelClassName)}>{_config.title}</div>
-              <div className={clsx(classes.itemValue, dataClassName)}>{_config.render(data[key], index)}</div>
-            </li>
-          );
-        })
-      }
+interface ListProps extends BareProps{
+  style?: ListStyle;
+}
+
+type ListComponent = FC<ListProps> & { Item: FC<ItemProps> };
+
+const _List: FC<ListProps> = ({
+  children,
+  className,
+  style
+}) => {
+  return (
+    <ul className={clsx(className, 'aca-list', `aca-list--style-${style}`)}>
+      {children}
     </ul>
   );
-});
+};
 
-List.displayName = 'List';
+(_List as any).Item = Item;
+
+export const List = _List as ListComponent;

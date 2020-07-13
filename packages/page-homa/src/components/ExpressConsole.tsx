@@ -2,7 +2,7 @@ import React, { FC, useMemo, useCallback, useState, useRef } from 'react';
 import { noop } from 'lodash';
 
 import { Fixed18, convertToFixed18 } from '@acala-network/app-util';
-import { Card, Tabs, NList } from '@acala-dapp/ui-components';
+import { Card, Tabs, List } from '@acala-dapp/ui-components';
 import { TxButton, TwoWayBalanceInput, FormatBalance, eliminateGap } from '@acala-dapp/react-components';
 import { useConstants, useStakingPoolHelper, useBalance } from '@acala-dapp/react-hooks';
 
@@ -80,12 +80,12 @@ const StakePanel: FC = () => {
           onError={setError}
           swap={false}
         />
-        <NList>
-          <NList.Item
+        <List>
+          <List.Item
             label='Price'
             value={<Price />}
           />
-        </NList>
+        </List>
       </div>
       <TxButton
         className={classes.actionBtn}
@@ -159,8 +159,8 @@ const UnstakePanel: FC = () => {
           onChange={setAmount}
           onError={setError}
         />
-        <NList>
-          <NList.Item
+        <List>
+          <List.Item
             label='Max To Unstake'
             value={
               <FormatBalance
@@ -169,11 +169,11 @@ const UnstakePanel: FC = () => {
               />
             }
           />
-          <NList.Item
+          <List.Item
             label='Price'
             value={<Price />}
           />
-          <NList.Item
+          <List.Item
             label='Fee'
             value={
               <FormatBalance
@@ -182,7 +182,7 @@ const UnstakePanel: FC = () => {
               />
             }
           />
-        </NList>
+        </List>
       </div>
       <TxButton
         className={classes.actionBtn}

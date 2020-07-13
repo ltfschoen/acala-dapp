@@ -3,9 +3,9 @@ import clsx from 'clsx';
 
 import { CurrencyId } from '@acala-network/types/interfaces';
 
-import { Card } from '@acala-dapp/ui-components';
-import { useConstants } from '@acala-dapp/react-hooks';
-import { TokenImage, TokenName, UserAssetBalance, UserAssetValue } from '@acala-dapp/react-components';
+import { Card, Condition } from '@acala-dapp/ui-components';
+import { useConstants, useBalance } from '@acala-dapp/react-hooks';
+import { TokenImage, TokenName, UserAssetBalance, UserAssetValue, tokenEq, StakingPoolExchangeRate } from '@acala-dapp/react-components';
 
 import classes from './WalletBalance.module.scss';
 import { BareProps } from '@acala-dapp/ui-components/types';
@@ -15,6 +15,9 @@ interface BalanceProps extends BareProps {
 }
 
 export const Balance: FC<BalanceProps> = ({ className, currency }) => {
+  const { liquidCurrency } = useConstants();
+  const liquidBalance = useBalance(liquidCurrency);
+
   return (
     <div className={clsx(classes.item, className)}>
       <TokenImage
@@ -31,11 +34,20 @@ export const Balance: FC<BalanceProps> = ({ className, currency }) => {
           currency={currency}
           decimalLength={2}
         />
-        <UserAssetValue
-          className={classes.amount}
-          currency={currency}
-          prefix='≈ US $'
-        />
+        <Condition
+          condition={tokenEq(currency, liquidCurrency)}
+          or={
+            <UserAssetValue
+              className={classes.amount}
+              currency={currency}
+              prefix='≈US$'
+            />
+          }>
+          <StakingPoolExchangeRate
+            liquidAmount={liquidBalance}
+            showLiquidAmount={false}
+          />
+        </Condition>
       </div>
     </div>
   );

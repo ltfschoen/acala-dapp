@@ -39,3 +39,6 @@ export * from './DexPoolSize';
 export * from './DexReward';
 export * from './DexRewardRatio';
 export * from './DexUserShare';
+
+// homa
+export * from './Homa';

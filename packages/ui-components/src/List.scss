@@ -14,3 +14,17 @@
   line-height: 19px;
   color: #999999;
 }
+
+.aca-list--style-list {
+  padding: 0 24px;
+
+  & > .aca-list__item {
+    padding: 14.5px 0 13.5px 0;
+    color: #333333;
+    border-bottom: 1px solid #ebeef5;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
