@@ -8,9 +8,8 @@ export const CouncilSelector: FC = () => {
   const councilList = useCouncilList();
   const { setCouncilType } = useContext(governanceContext);
 
-  const handleChange = (active: string): void => {
-    console.log(active);
-    setCouncilType(active || '');
+  const handleChange = (active: string | number): void => {
+    setCouncilType(active || '' as any);
   };
 
   return (

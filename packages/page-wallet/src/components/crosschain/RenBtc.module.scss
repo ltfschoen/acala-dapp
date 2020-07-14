@@ -110,6 +110,15 @@
     display: grid;
     place-items: center;
 
+    .nextBtn {
+      width: 320px;
+      height: 58px;
+
+      font-weight: bold;
+      font-size: 20px;
+      line-height: 30px;
+    }
+
     .prevBtn {
       position: absolute;
       left: 0;

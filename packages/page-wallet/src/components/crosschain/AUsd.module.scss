@@ -1,0 +1,25 @@
+.root {
+  display: grid;
+  place-items: center;
+
+  .container {
+    width: 512px;
+    padding: 16px 0 32px 0;
+  }
+
+  .actionArea {
+    position: relative;
+    margin-top: 24px;
+    display: grid;
+    place-items: center;
+
+    .txBtn {
+      width: 320px;
+      height: 58px;
+
+      font-weight: bold;
+      font-size: 20px;
+      line-height: 30px;
+    }
+  }
+}

@@ -7,6 +7,7 @@ import { Tabs } from '@acala-dapp/ui-components';
 
 import classes from './CrossChainConsole.module.scss';
 import { RenBtc } from './crosschain/RenBtc';
+import { AUSD } from './crosschain/AUSD';
 
 const AssetCard: FC<{ currency: CurrencyLike}> = ({ currency }) => {
   return (
@@ -25,12 +26,13 @@ const AssetCard: FC<{ currency: CurrencyLike}> = ({ currency }) => {
 };
 
 const crossChainConsoleList: Map<string, ReactElement> = new Map([
-  ['XBTC', <RenBtc key='renbtc' />]
+  ['XBTC', <RenBtc key='renbtc' />],
+  ['AUSD', <AUSD key='ausd' />]
 ]);
 
 const crossChainDisabled: Map<string, boolean> = new Map([
   ['XBTC', false],
-  ['AUSD', true],
+  ['AUSD', false],
   ['DOT', true]
 ]);
 

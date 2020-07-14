@@ -7,6 +7,7 @@ import PageSwap from '@acala-dapp/page-swap';
 import PageWallet from '@acala-dapp/page-wallet';
 import PageGovernance from '@acala-dapp/page-governance';
 import PageLoanCharts from '@acala-dapp/page-loan-charts';
+import { Fadein } from '@acala-dapp/ui-components';
 
 import { MainLayout } from './layouts/Main';
 import { sideBarConfig } from './sidebar-config';
@@ -22,27 +23,27 @@ export const config: RouterConfigData[] = [
   {
     children: [
       {
-        element: <PageWallet />,
+        element: <Fadein key='wallet'><PageWallet /></Fadein>,
         path: 'wallet'
       },
       {
-        element: <PageDeposit />,
+        element: <Fadein key='deposit'><PageDeposit /></Fadein>,
         path: 'deposit'
       },
       {
-        element: <PageLoan />,
+        element: <Fadein key='loan'><PageLoan /></Fadein>,
         path: 'loan'
       },
       {
-        element: <PageHoma />,
+        element: <Fadein key='homa'><PageHoma /></Fadein>,
         path: 'homa'
       },
       {
-        element: <PageSwap />,
+        element: <Fadein key='swap'><PageSwap /></Fadein>,
         path: 'swap'
       },
       {
-        element: <PageGovernance />,
+        element: <Fadein key='governance'><PageGovernance /></Fadein>,
         path: 'governance'
       },
       {

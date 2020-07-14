@@ -117,17 +117,14 @@ const _Tabs: FC<TabsProps> = ({
         }
       </ul>
       <Motion
-        defaultStyle={{ opacity: 0, right: 8 }}
+        defaultStyle={{ opacity: 0 }}
         key={active}
-        style={{ opacity: spring(1, presets.gentle), right: spring(0, presets.gentle) }}
+        style={{ opacity: spring(1, presets.gentle) }}
       >
         {
           (interpolatedStyle): JSX.Element => (
             <div className='aca-tabs__content'
-              style={{
-                opacity: interpolatedStyle.opacity,
-                transform: `translate3d(${interpolatedStyle.right}px, 0, 0)`
-              }}
+              style={{ opacity: interpolatedStyle.opacity }}
             >
               {activePanel}
             </div>

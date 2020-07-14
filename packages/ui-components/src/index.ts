@@ -26,3 +26,4 @@ export * from './Chart';
 export * from './List';
 export * from './Tooltip';
 export * from './Form';
+export * from './Animation';
