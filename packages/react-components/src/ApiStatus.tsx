@@ -38,7 +38,6 @@ export const ApiStatus: FC<BareProps> = memo(({ className }) => {
         }
       )
     }>
-      {getStatusText()}
       <p>{chain}</p>
     </div>
   );

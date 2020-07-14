@@ -18,10 +18,10 @@
   }
 
   &.connected {
-    color: #173dc9;
+    color: var(--color-primary);
   }
 
   &.connected::before {
-    background: #173dc9;
+    background: var(--color-primary);
   }
 }

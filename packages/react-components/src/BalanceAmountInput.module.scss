@@ -6,7 +6,7 @@
   display: flex;
 
   &:hover, &.focused {
-    border-color: #173dc9;
+    border-color: var(--color-primary);
   }
 
   &.error {

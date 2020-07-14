@@ -12,6 +12,7 @@ type TabsSize = 'large' | 'normal' | 'small';
 interface PanelProps extends BareProps {
   tab: ReactNode;
   key: string | number;
+  disabled?: boolean;
 }
 
 export const Panel: FC<PanelProps> = ({ children }) => {
@@ -31,7 +32,7 @@ interface TabsProps extends BareProps {
 }
 
 type TabsComponent = FC<TabsProps> & { Panel: FC<PanelProps> };
-type PanelAttr = Pick<PanelProps, 'key' | 'tab'>;
+type PanelAttr = Pick<PanelProps, 'key' | 'tab' | 'disabled'>;
 
 const _Tabs: FC<TabsProps> = ({
   children,
@@ -44,7 +45,7 @@ const _Tabs: FC<TabsProps> = ({
 }) => {
   const [active, setActive] = useState<string | number>('');
   const rootClass = clsx('aca-tabs', `aca-tabs--${type}`, `aca-tabs--${size}`, className);
-  const tabClassF = (active: boolean): string => clsx('aca-tabs__tab', tabClassName, { active: active });
+  const tabClassF = (active: boolean, disabled?: boolean): string => clsx('aca-tabs__tab', tabClassName, { active: active, disabled: disabled });
 
   // extact panels config
   const panels = useMemo<PanelAttr[]>((): PanelAttr[] => {
@@ -53,6 +54,7 @@ const _Tabs: FC<TabsProps> = ({
     const result = Children.map(children, (child): PanelAttr | undefined => {
       if (has(child, 'key')) {
         return {
+          disabled: (child as ReactElement<PanelProps>).props.disabled,
           key: (child as ReactElement<PanelProps>).key || '',
           tab: (child as ReactElement<PanelProps>).props.tab
         };
@@ -84,7 +86,9 @@ const _Tabs: FC<TabsProps> = ({
     onChange && onChange(_active);
   }, [setActive, onChange]);
 
-  const handleTabClick = useCallback((active: string | number): void => {
+  const handleTabClick = useCallback((active: string | number, disabled?: boolean): void => {
+    if (disabled) return;
+
     changeActive(active);
   }, [changeActive]);
 
@@ -103,9 +107,9 @@ const _Tabs: FC<TabsProps> = ({
         {
           panels.map((item: PanelAttr): ReactNode => (
             <li
-              className={tabClassF(item.key === active)}
+              className={tabClassF(item.key === active, item.disabled)}
               key={`tabs-${item.key}`}
-              onClick={(): void => handleTabClick(item.key)}
+              onClick={(): void => handleTabClick(item.key, item.disabled)}
             >
               {item.tab}
             </li>
@@ -113,16 +117,16 @@ const _Tabs: FC<TabsProps> = ({
         }
       </ul>
       <Motion
-        defaultStyle={{ opacity: 0, top: 8 }}
+        defaultStyle={{ opacity: 0, right: 8 }}
         key={active}
-        style={{ opacity: spring(1, presets.gentle), top: spring(0, presets.gentle) }}
+        style={{ opacity: spring(1, presets.gentle), right: spring(0, presets.gentle) }}
       >
         {
           (interpolatedStyle): JSX.Element => (
             <div className='aca-tabs__content'
               style={{
                 opacity: interpolatedStyle.opacity,
-                transform: `translate3d(0, ${interpolatedStyle.top}px, 0)`
+                transform: `translate3d(${interpolatedStyle.right}px, 0, 0)`
               }}
             >
               {activePanel}

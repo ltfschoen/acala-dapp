@@ -28,12 +28,17 @@
   line-height: 20px;
   font-weight: 500;
   color: $color-primary;
+  transition: all 200ms ease;
 
   & > svg {
     margin-right: 13px;
   }
 
-  &:global(.active) {
+  &:hover {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  &:hover, &:global(.active) {
     background-image: linear-gradient(90deg, #E5EAFF 0%, #F5F6FA 100%);
   }
 
@@ -62,12 +67,26 @@
 }
 
 .social {
+  display: flex;
+  padding: 0 24px;;
 
   & .item {
-    height: 38px;
+    margin-right: 12px;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+
+    &:hover {
+      transform: scale(1.1);
+      background: none;
+    }
+  }
+
+  & svg {
+    margin: 0;
   }
 }
 
 .status {
-  margin: 31px 21px;
+  margin: 24px 24px 65px 24px;
 }

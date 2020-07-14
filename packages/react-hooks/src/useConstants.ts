@@ -9,6 +9,7 @@ import { Fixed18, convertToFixed18 } from '@acala-network/app-util';
 
 interface HooksReturnType {
   allCurrencies: CurrencyId[];
+  crossChainCurrencies: CurrencyId[];
   dexBaseCurrency: CurrencyId;
   dexCurrencies: CurrencyId[];
   loanCurrencies: CurrencyId[];
@@ -28,6 +29,12 @@ export const useConstants = (): HooksReturnType => {
     const tokenList = api.registry.createType('CurrencyId' as any).defKeys as string[];
 
     return tokenList.map((name: string): CurrencyId => {
+      return api.registry.createType('CurrencyId' as any, name) as CurrencyId;
+    });
+  }, [api]);
+
+  const crossChainCurrencies = useMemo((): CurrencyId[] => {
+    return ['XBTC', 'AUSD', 'DOT'].map((name: string): CurrencyId => {
       return api.registry.createType('CurrencyId' as any, name) as CurrencyId;
     });
   }, [api]);
@@ -60,6 +67,7 @@ export const useConstants = (): HooksReturnType => {
 
   return {
     allCurrencies,
+    crossChainCurrencies,
     dexBaseCurrency,
     dexCurrencies,
     expectedBlockTime,

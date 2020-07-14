@@ -26,10 +26,6 @@ p, span {
   cursor: inherit;
 }
 
-.ac-font-medium {
-  font-weight: 500;
-}
-
-.ac-font-black {
-  color: #333333;
+:root {
+  --color-primary: #173dc9;
 }

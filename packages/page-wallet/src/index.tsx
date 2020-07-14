@@ -1,31 +1,31 @@
 import React, { FC } from 'react';
 
-import { Page, Grid } from '@acala-dapp/ui-components';
-
-import { UserCard } from './components/UserCard';
-import { AirDrop } from '@acala-dapp/react-components';
-import { Transaction } from './components/Transaction';
-import { WalletBalance } from './components/WalletBalance';
+import { Page, Tabs } from '@acala-dapp/ui-components';
+import { AcalaConsole } from './components/AcalaConsole';
+import { CrossChainConsole } from './components/CrossChainConsole';
 
 const PageWallet: FC = () => {
   return (
     <Page>
       <Page.Title title='Wallet' />
       <Page.Content>
-        <Grid container>
-          <Grid item>
-            <UserCard />
-          </Grid>
-          <Grid item>
-            <WalletBalance />
-          </Grid>
-          <Grid item>
-            <AirDrop />
-          </Grid>
-          <Grid item>
-            <Transaction />
-          </Grid>
-        </Grid>
+        <Tabs
+          defaultKey='cross-chain'
+          type='button'
+        >
+          <Tabs.Panel
+            key='acala'
+            tab='Acala'
+          >
+            <AcalaConsole />
+          </Tabs.Panel>
+          <Tabs.Panel
+            key='cross-chain'
+            tab='Cross-chain'
+          >
+            <CrossChainConsole />
+          </Tabs.Panel>
+        </Tabs>
       </Page.Content>
     </Page>
   );

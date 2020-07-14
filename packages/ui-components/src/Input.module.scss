@@ -15,11 +15,11 @@
   }
 
   &:hover, &.focused {
-    border-color: #173dc9;
+    border-color: var(--color-primary);
   }
 
   &:hover .suffix polyline {
-    stroke: #173dc9;
+    stroke: var(--color-primary);
   }
 
   &.error {

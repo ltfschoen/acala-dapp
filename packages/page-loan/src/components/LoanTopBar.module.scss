@@ -16,7 +16,7 @@
   font-weight: 500;
 
   &.active {
-    border-color: #173dc9;
+    border-color: var(--color-primary);
   }
 
   &.overview {

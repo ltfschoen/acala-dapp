@@ -14,6 +14,7 @@ export const SocialMedias: FC<Props> = memo(({ data }) => {
       {data.map((item) => (
         <ProductItem
           key={`products-${item.name}`}
+          showTitle={false}
           {...item}
         />
       ))}

@@ -57,7 +57,7 @@
     &.disabled {
       cursor: not-allowed;
       color: #d9d9d9; 
-      background: opacify($color-primary, 0.8);
+      background: var(--color-primary);
     }
   }
 

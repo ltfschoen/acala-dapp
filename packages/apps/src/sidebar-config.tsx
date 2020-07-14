@@ -7,6 +7,8 @@ import { ReactComponent as LoanSVG } from '@acala-dapp/apps/assets/loan.svg';
 import { ReactComponent as ExchangeSVG } from '@acala-dapp/apps/assets/exchange.svg';
 import { ReactComponent as GovernanceSVG } from '@acala-dapp/apps/assets/governance.svg';
 import { ReactComponent as LiquidSVG } from '@acala-dapp/apps/assets/liquid.svg';
+import { ReactComponent as GuideSVG } from '@acala-dapp/apps/assets/guide.svg';
+import { ReactComponent as FaucetSVG } from '@acala-dapp/apps/assets/faucet.svg';
 
 import { SideBarConfig } from './types/sidebar';
 
@@ -45,6 +47,20 @@ export const sideBarConfig: SideBarConfig = {
   ],
   socialMedia: [
     {
+      icon: <FaucetSVG />,
+      isExternal: true,
+      name: 'Twitter',
+      path: 'https://discord.com/channels/709208197549785148/709208400176742441',
+      target: '_blank'
+    },
+    {
+      icon: <GuideSVG />,
+      isExternal: true,
+      name: 'Wiki',
+      path: 'https://github.com/AcalaNetwork/Acala/wiki',
+      target: '_blank'
+    },
+    {
       icon: <EmailSVG />,
       isExternal: true,
       name: 'Email',
@@ -57,6 +73,6 @@ export const sideBarConfig: SideBarConfig = {
       name: 'Twitter',
       path: 'https://twitter.com/AcalaNetwork',
       target: '_blank'
-    }
+    },
   ]
 };

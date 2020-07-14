@@ -27,7 +27,6 @@ export const PricesFeedCard: FC = memo(() => {
       render (data: Fixed18): ReactNode {
         return (
           <FormatFixed18
-            className='ac-font-medium'
             data={data}
             prefix='$'
           />
@@ -42,7 +41,6 @@ export const PricesFeedCard: FC = memo(() => {
       <Card header='Price Feed'
         padding={false}>
         <Table
-          cellClassName={'ac-font-black'}
           config={tableConfig}
           data={data}
           size='small'
