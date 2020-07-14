@@ -1,0 +1,121 @@
+.root {
+  display: grid;
+  place-items: center;
+
+  .container {
+    width: 512px;
+    padding: 16px 0 32px 0;
+  }
+
+  .alert {
+    background: #F2F5F7;
+    border-radius: 2px;
+    padding: 12px;
+
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--color-primary-light);
+    text-align: center;
+  }
+
+  .step {
+    margin-top: 24px;
+  }
+
+  .input {
+    height: 64px !important;
+  }
+
+  .inputStepInfo {
+    position: relative;
+    border: 1px solid #cccccc;
+    border-radius: 2px;
+
+    &::after {
+      position: absolute;
+      z-index: -1;
+      content: '';
+      top: 34px;
+      left: 19.5px;
+      width: 1px;
+      height: 60px;
+      background: #cccccc;
+    }
+
+    & .item {
+      position: relative;
+      margin-left: 45px;
+      padding-right: 24px;
+      height: 60px;
+
+      border-bottom: 1px solid #e9e9e9;
+      font-size: 16px;
+      line-height: 19px;
+      color: #333333;
+
+      &::after {
+        position: absolute;
+        content: '';
+        top: 50%;
+        left: 0;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: red;
+        transform: translate3d(-28px, -4px, 0);
+      }
+
+      &.destination::after {
+        background: #f7b500;
+      }
+
+      &.receive::after {
+        background: #0155ff;
+      }
+
+      &:last-child {
+        border: none;
+      }
+    }
+  }
+
+  .confirmInfo {
+    margin-top: 16px;
+    padding: 0 24px;
+    border: 1px solid #cccccc;
+    border-radius: 2px;
+
+    .item {
+      padding: 20px 0;
+      font-size: 16px;
+      line-height: 19px;
+      color: #333333;
+
+      border-color: #cccccc;
+    }
+  }
+
+  .nextBtn {
+    width: 320px;
+    height: 58px;
+
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  .actionArea {
+    position: relative;
+    margin-top: 24px;
+    display: grid;
+    place-items: center;
+
+    .prevBtn {
+      position: absolute;
+      left: 0;
+      padding: 0;
+      justify-content: flex-start;
+      color: var(--color-primary-light);
+    }
+  }
+}

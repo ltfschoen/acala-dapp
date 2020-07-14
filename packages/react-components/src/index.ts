@@ -7,6 +7,7 @@ export * from './ApiStatus';
 export * from './BalanceInput';
 export * from './BalanceAmountInput';
 export * from './TwoWayBalanceInput';
+export * from './NBalanceInput';
 export * from './SelectAccount';
 export * from './Token';
 export * from './TokenSelector';

@@ -8,40 +8,39 @@ import { BareProps } from '@acala-dapp/ui-components/types';
 import { Button, Condition } from '@acala-dapp/ui-components';
 
 import { TokenName, TokenImage } from './Token';
-import { TokenSelector } from './TokenSelector';
 import { getCurrencyIdFromName } from './utils';
 import classes from './BalanceInput.module.scss';
 
 type BalanceInputSize = 'large' | 'middle';
 
-export interface BalanceInputProps extends BareProps {
+export interface NBalanceInputProps extends BareProps {
   currencies?: (CurrencyId | string)[];
-  enableTokenSelect?: boolean;
   error?: string | string[] | FormikErrors<any> | FormikErrors<any>[];
   disabled?: boolean;
   id?: string;
   name?: string;
-  onChange?: any;
-  onTokenChange?: (token: CurrencyId) => void;
+  onChange?: (value?: number) => void;
+  value?: number;
   onFocus?: FocusEventHandler<HTMLInputElement>;
   onBlur?: FocusEventHandler<HTMLInputElement>;
   placeholder?: string;
   token: CurrencyId | string;
   tokenPosition?: 'left' | 'right';
-  value?: number;
   showMaxBtn?: boolean;
   showIcon?: boolean;
   size?: BalanceInputSize;
   onMax?: () => void;
   border?: boolean;
+  decimalPlaces?: number;
 }
 
-export const BalanceInput: FC<BalanceInputProps> = ({
+const numberPattern = /^([1-9]\d*|0)(\.\d+)?$/;
+
+export const NBalanceInput: FC<NBalanceInputProps> = forwardRef<HTMLDivElement, NBalanceInputProps>(({
   border = true,
   className,
-  currencies,
+  decimalPlaces = 6,
   disabled = false,
-  enableTokenSelect = false,
   error,
   id,
   name,
@@ -49,15 +48,14 @@ export const BalanceInput: FC<BalanceInputProps> = ({
   onChange,
   onFocus,
   onMax,
-  onTokenChange,
   placeholder,
   showIcon = true,
   showMaxBtn = false,
   size = 'large',
   token,
   tokenPosition = 'right',
-  value
-}) => {
+  value = ''
+}, ref) => {
   const { api } = useApi();
   const [focused, setFocused] = useState<boolean>(false);
 
@@ -69,34 +67,12 @@ export const BalanceInput: FC<BalanceInputProps> = ({
 
   const renderToken = useCallback((): ReactNode => {
     return (
-      <Condition
-        condition={enableTokenSelect}
-        match={(
-          <TokenSelector
-            className={
-              clsx(
-                classes.tokenSelector,
-                classes[tokenPosition],
-                {
-                  [classes.showIcon]: showIcon
-                }
-              )
-            }
-            currencies={currencies}
-            onChange={onTokenChange}
-            showIcon={showIcon}
-            value={_token}
-          />
-        )}
-        or={(
-          <div className={classes.token}>
-            <TokenImage currency={_token} />
-            <TokenName currency={_token} />
-          </div>
-        )}
-      />
+      <div className={classes.token}>
+        { showIcon ? <TokenImage currency={_token} /> : null }
+        <TokenName currency={_token} />
+      </div>
     );
-  }, [enableTokenSelect, tokenPosition, currencies, onTokenChange, showIcon, _token]);
+  }, [showIcon, _token]);
 
   const _onFocus: FocusEventHandler<HTMLInputElement> = useCallback((event) => {
     setFocused(true);
@@ -109,8 +85,20 @@ export const BalanceInput: FC<BalanceInputProps> = ({
   }, [setFocused, onBlur]);
 
   const _onChange: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
-    if (onChange) onChange(e);
-  }, [onChange]);
+    const value = e.target.value;
+    const [, d] = value.split('.');
+
+    // handle empty value
+    if (!value && onChange) onChange();
+
+    // check if number
+    if (!numberPattern.test(value)) return;
+
+    // check decimal places
+    if (decimalPlaces && d && d.length > decimalPlaces) return;
+
+    if (onChange) onChange(Number(value));
+  }, [onChange, decimalPlaces]);
 
   const rootClasses = useMemo<string>((): string => clsx(
     className,
@@ -126,6 +114,7 @@ export const BalanceInput: FC<BalanceInputProps> = ({
   return (
     <div
       className={rootClasses}
+      ref={ref}
     >
       <Condition condition={tokenPosition === 'left'}>
         {renderToken}
@@ -158,4 +147,6 @@ export const BalanceInput: FC<BalanceInputProps> = ({
       <p className={clsx(classes.error, { [classes.show]: !!error })}>{error ? error.toString() : ''}</p>
     </div>
   );
-};
+});
+
+NBalanceInput.displayName = 'NBalanceInput';

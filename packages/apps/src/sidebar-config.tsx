@@ -49,7 +49,7 @@ export const sideBarConfig: SideBarConfig = {
     {
       icon: <FaucetSVG />,
       isExternal: true,
-      name: 'Twitter',
+      name: 'Faucet',
       path: 'https://discord.com/channels/709208197549785148/709208400176742441',
       target: '_blank'
     },

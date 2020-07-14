@@ -2,13 +2,7 @@ import React, { FC } from 'react';
 
 import { Tabs, Card } from '@acala-dapp/ui-components';
 
-const Alert: FC = () => {
-  return (
-    <div>
-
-    </div>
-  );
-};
+import { RenBtcMint } from './RenBtcMint';
 
 export const RenBtc: FC = () => {
   return (
@@ -18,7 +12,7 @@ export const RenBtc: FC = () => {
           key='mint'
           tab='Mint'
         >
-          <p>hello</p>
+          <RenBtcMint />
         </Tabs.Panel>
         <Tabs.Panel
           disabled
