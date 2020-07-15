@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { CurrencyId } from '@acala-network/types/interfaces';
 import { CurrencyLike } from '@acala-dapp/react-hooks/types';
 import { Dialog, ArrowDownIcon, CheckedCircleIcon, FormItem, Button } from '@acala-dapp/ui-components';
+import { LAMINAR_WATCHER_ADDRESS } from '@acala-dapp/react-components';
 import { useModal, useConstants } from '@acala-dapp/react-hooks';
 
 import { getTokenName, tokenEq, numToFixed18Inner } from './utils';
@@ -34,7 +35,6 @@ const AssetBoard: FC<AssetBoardProps> = ({
           <div className={classes.balance}>
             <UserAssetBalance
               currency={currency}
-              decimalLength={2}
             />
             <TokenName
               className={classes.token}
@@ -45,7 +45,6 @@ const AssetBoard: FC<AssetBoardProps> = ({
           <UserAssetValue
             className={classes.amount}
             currency={currency}
-            prefix='≈ US$'
             withTooltip={false}
           />
         </div>
@@ -116,6 +115,8 @@ const TransferForm: FC<TransferFormProps> = ({
   onBalanceError,
   onCurrencyChange
 }) => {
+  const { stableCurrency } = useConstants();
+
   return (
     <>
       <FormItem
@@ -123,9 +124,10 @@ const TransferForm: FC<TransferFormProps> = ({
         label='Account'
       >
         <AddressInput
+          blockAddressList={tokenEq(currency, stableCurrency) ? [] : [LAMINAR_WATCHER_ADDRESS]}
           id='account'
           name='account'
-          onAddressChange={onAccountChange}
+          onChange={onAccountChange}
           onError={onAccountError}
         />
       </FormItem>
@@ -234,7 +236,7 @@ export const TransferModal: FC<TransferModalProps> = ({
           </TxButton>
         </>
       }
-      onClose={onClose}
+      onCancel={onClose}
       title={renderHeader()}
       visiable={visiable}
       withClose

@@ -282,7 +282,10 @@ export const LonaActionButton: FC<Props> = ({
           <List.Item
             label='New Collateral Ratio'
             value={
-              <FormatBalance balance={formatListData(newCollateralRatio)} />
+              <FormatFixed18
+                data={formatListData(newCollateralRatio)}
+                format='percentage'
+              />
             }
           />
           <List.Item

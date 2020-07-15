@@ -31,6 +31,7 @@ export const FormatFixed18: FC<FormatFixed18Props> = ({
   const _data = (data || Fixed18.ZERO);
 
   const getRenderText = (data: Fixed18): string => {
+
     let _text = '';
 
     if (!data.isFinity()) {

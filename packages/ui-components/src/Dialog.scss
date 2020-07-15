@@ -1,0 +1,35 @@
+@import './styles/index.scss';
+
+.aca-dialog__root {
+  top: 400px !important;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  max-height: 80%;
+  width: 480px;
+  border-radius: 2px;
+  background: #ffffff;
+  outline: none;
+
+  &.ant-modal {
+    padding-bottom: 0;
+  }
+
+  & .ant-modal-header {
+    border: none;
+    font-size: 24px;
+    line-height: 28px;
+    color: #333333;
+    padding-bottom: 0;
+  }
+}
+
+.aca-dialog__actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+
+  & > button {
+    margin-left: 16px;
+  }
+}

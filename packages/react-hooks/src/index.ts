@@ -15,7 +15,6 @@ export * from './useMemorized';
 export * from './useStateWithCallback';
 export * from './useFormValidator';
 export * from './useModal';
-export * from './useNotification';
 
 // system
 export * from './balanceHooks';

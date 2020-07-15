@@ -12,6 +12,11 @@ export * from './account';
 
 dayjs.extend(duration);
 
+
+export const LAMINAR_WATCHER_ADDRESS = '5CLaminarAUSDCrossChainTransferxxxxxxxxxxxxxwisu';
+
+export const LAMINAR_SENDER_ADDRESS = '5DiKSJG59azdU8YkmYcPxSg2BNfXgph4dcJVKEn5vibyN6iK';
+
 // works like toFixed but don't round, doesn't support scientific notation
 export const padDecimalPlaces = (origin: number | string, dp: number): string => {
   const _origin = origin.toString();
@@ -76,6 +81,10 @@ export const thousand = (num: number): string => {
 };
 
 export const formatHash = (hash: string): string => {
+  if (hash === LAMINAR_WATCHER_ADDRESS || hash === LAMINAR_SENDER_ADDRESS) {
+    return 'Lamina';
+  }
+
   return hash.replace(/(\w{6})\w*?(\w{6}$)/, '$1......$2');
 };
 

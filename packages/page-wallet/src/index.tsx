@@ -10,7 +10,7 @@ const PageWallet: FC = () => {
       <Page.Title title='Wallet' />
       <Page.Content>
         <Tabs
-          defaultKey='cross-chain'
+          defaultKey='acala'
           type='button'
         >
           <Tabs.Panel
@@ -20,6 +20,7 @@ const PageWallet: FC = () => {
             <AcalaConsole />
           </Tabs.Panel>
           <Tabs.Panel
+            disabled
             key='cross-chain'
             tab='Cross-chain'
           >

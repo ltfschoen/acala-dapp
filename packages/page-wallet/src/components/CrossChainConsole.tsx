@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactElement, useMemo } from 'react';
 
 import { CurrencyLike } from '@acala-dapp/react-hooks/types';
 import { TokenImage, TokenName, TokenFullName } from '@acala-dapp/react-components';
@@ -26,23 +26,26 @@ const AssetCard: FC<{ currency: CurrencyLike}> = ({ currency }) => {
 };
 
 const crossChainConsoleList: Map<string, ReactElement> = new Map([
-  ['XBTC', <RenBtc key='renbtc' />],
-  ['AUSD', <AUSD key='ausd' />]
+  ['AUSD', <AUSD key='ausd' />],
+  ['XBTC', <RenBtc key='renbtc' />]
 ]);
 
 const crossChainDisabled: Map<string, boolean> = new Map([
-  ['XBTC', false],
+  ['XBTC', true],
   ['AUSD', false],
   ['DOT', true]
 ]);
 
 export const CrossChainConsole: FC = () => {
   const { crossChainCurrencies } = useConstants();
+  const _currencies = useMemo(() => {
+    return crossChainCurrencies.sort((a) => Number(crossChainDisabled.get(a.toString())) - 0.5);
+  }, [crossChainCurrencies]);
 
   return (
     <Tabs>
       {
-        crossChainCurrencies.map((currency) => {
+        _currencies.map((currency) => {
           return (
             <Tabs.Panel
               disabled={crossChainDisabled.get(currency.toString())}

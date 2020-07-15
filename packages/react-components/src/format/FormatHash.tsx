@@ -46,7 +46,7 @@ export const FormatHash: FC<Props> = ({
 
   return (
     <Copy
-      display={formatHash(hash)}
+      display={`Copy ${formatHash(hash)} Success`}
       render={renderInner}
       text={hash}
       withCopy={withCopy}

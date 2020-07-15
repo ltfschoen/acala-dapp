@@ -58,6 +58,7 @@ export const UserAssetValue: FC<UserAssetValueProps> = ({
   return (
     <FormatFixed18
       data={amount}
+      maxDecimalLength={2}
       prefix={prefix}
       {...other}
     />

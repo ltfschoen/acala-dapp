@@ -4,8 +4,6 @@ import { timeout, switchMap } from 'rxjs/operators';
 
 import { options } from '@acala-network/api';
 
-import { EventsWatcher } from '@acala-dapp/react-components';
-
 import { selectFastestEndpoints, DEFAULT_ENDPOINTS } from './utils/endpoints';
 
 const MAX_CONNECT_TIME = 1000 * 60; // one minute
@@ -134,7 +132,6 @@ export const ApiProvider: FC<Props> = ({
     >
       {renderContent()}
       {renderError()}
-      <EventsWatcher />
     </ApiContext.Provider>
   );
 };

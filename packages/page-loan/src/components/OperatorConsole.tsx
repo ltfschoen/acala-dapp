@@ -47,7 +47,8 @@ export const DebitConsole: FC<OperatorConsoleProps> = ({ currency }) => {
         <FormatFixed18
           className={classes.amount}
           data={helper.debitAmount}
-          prefix='≈ US $'
+          maxDecimalLength={2}
+          prefix='≈US $'
         />
       </div>
       <div className={classes.actionArea}>
@@ -127,7 +128,8 @@ export const CollateralConsole: FC<OperatorConsoleProps> = ({ currency }) => {
         <FormatFixed18
           className={classes.amount}
           data={helper.collateralAmount}
-          prefix='≈ US $'
+          maxDecimalLength={2}
+          prefix='≈US $'
         />
       </div>
       <div className={classes.actionArea}>

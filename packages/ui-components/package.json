@@ -7,7 +7,7 @@
   "homepage": "https://github.com/AcalaNetwork/acala-dapp#readme",
   "license": "Apache-2.0",
   "dependencies": {
-    "@material-ui/core": "^4.9.13",
+    "@ant-design/icons": "^4.2.1",
     "@types/react-motion": "^0.0.29",
     "antd": "^4.4.0",
     "clsx": "^1.1.0",

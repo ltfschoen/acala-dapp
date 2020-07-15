@@ -39,7 +39,7 @@ export const Balance: FC<BalanceProps> = ({ className, currency }) => {
             <UserAssetValue
               className={classes.amount}
               currency={currency}
-              prefix='≈US$'
+              prefix='≈US $'
             />
           }>
           <StakingPoolExchangeRate

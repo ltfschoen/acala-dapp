@@ -2,8 +2,9 @@ import React, { FC, useMemo } from 'react';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 
-import { UIProvider, Notification } from '@acala-dapp/ui-components';
+import { UIProvider } from '@acala-dapp/ui-components';
 import { AcalaProvider } from '@acala-dapp/react-environment';
+import { EventsWatcher } from '@acala-dapp/react-components';
 
 import { RouterProvider } from './components/RouterProvider';
 import { config as routerConfig } from './router-config';
@@ -16,11 +17,12 @@ const App: FC = () => {
   return (
     <ApolloProvider client={client}>
       <UIProvider>
-        <Notification>
-          <AcalaProvider applicationName={'Acala Dapp'}>
+        <AcalaProvider applicationName={'Acala Dapp'}>
+          <>
             <RouterProvider config={routerConfig} />
-          </AcalaProvider>
-        </Notification>
+            <EventsWatcher />
+          </>
+        </AcalaProvider>
       </UIProvider>
     </ApolloProvider>
   );

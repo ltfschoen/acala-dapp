@@ -6,10 +6,8 @@ import { ITuple } from '@polkadot/types/types';
 import { DispatchError, AccountInfo } from '@polkadot/types/interfaces';
 import { SubmittableExtrinsic } from '@polkadot/api/types';
 
-import { useAccounts, useApi, useNotification, useHistory } from '@acala-dapp/react-hooks';
-import { Button, ButtonProps } from '@acala-dapp/ui-components';
-import { CreateNotification } from '@acala-dapp/ui-components/Notification/context';
-import { NotificationConfig } from '@acala-dapp/ui-components/Notification/types';
+import { useAccounts, useApi, useHistory } from '@acala-dapp/react-hooks';
+import { Button, ButtonProps, notification, LoadingOutlined } from '@acala-dapp/ui-components';
 
 import { FormatAddress } from './format';
 
@@ -25,7 +23,7 @@ interface Props extends ButtonProps {
 
 const MAX_TX_DURATION_TIME = 60 * 1000;
 
-function extractEvents (api: ApiRx, result: SubmittableResult, createNotification: CreateNotification): void {
+function extractEvents (api: ApiRx, result: SubmittableResult): void {
   if (!result || !result.events) {
     return;
   }
@@ -49,19 +47,13 @@ function extractEvents (api: ApiRx, result: SubmittableResult, createNotificatio
           }
         }
 
-        createNotification({
-          content: message,
-          icon: 'error',
-          removedDelay: 4000,
-          title: `${section}.${method}`,
-          type: 'error'
+        notification.error({
+          description: message,
+          message: 'some error occur'
         });
       } else {
-        console.log(section, method, data.toString());
-        createNotification({
-          removedDelay: 4000,
-          title: `${section}.${method}`,
-          type: 'info'
+        notification.info({
+          message: `${section}.${method}`
         });
       }
     });
@@ -82,7 +74,6 @@ export const TxButton: FC<PropsWithChildren<Props>> = ({
   const { api } = useApi();
   const { active } = useAccounts();
   const [isSending, setIsSending] = useState<boolean>(false);
-  const { createNotification } = useNotification();
   const { refresh } = useHistory();
 
   const _onFailed = (): void => {
@@ -115,9 +106,8 @@ export const TxButton: FC<PropsWithChildren<Props>> = ({
     // lock btn click
     setIsSending(true);
 
-    let notification: NotificationConfig = {} as NotificationConfig;
+    let notificationKey = '';
 
-    // try {
     const subscriber = api.query.system.account<AccountInfo>(active.address).pipe(
       switchMap((account) => {
         return api.tx[section][method](...params).signAsync(
@@ -131,13 +121,15 @@ export const TxButton: FC<PropsWithChildren<Props>> = ({
       switchMap((signedTx: SubmittableExtrinsic<'rxjs'>) => {
         const hash = signedTx.hash.toString();
 
+        notificationKey = `${section}-${method}`;
         signedTx.paymentInfo(active.address).subscribe((result) => console.log(result.toString()));
 
-        notification = createNotification({
-          content: <FormatAddress address={hash} />,
-          icon: 'loading',
-          title: `${section}: ${method}`,
-          type: 'info'
+        notification.info({
+          description: <FormatAddress address={hash} />,
+          duration: null,
+          icon: <LoadingOutlined spin />,
+          key: notificationKey,
+          message: `${section}: ${method}`
         });
 
         return signedTx.send().pipe(timeout(MAX_TX_DURATION_TIME));
@@ -147,7 +139,7 @@ export const TxButton: FC<PropsWithChildren<Props>> = ({
           result.status.isInBlock ||
           result.status.isFinalized
         ) {
-          extractEvents(api, result as unknown as SubmittableResult, createNotification);
+          extractEvents(api, result as unknown as SubmittableResult);
 
           return true;
         }
@@ -167,25 +159,18 @@ export const TxButton: FC<PropsWithChildren<Props>> = ({
       })
     ).subscribe({
       error: (error: Error) => {
-        let config = {};
-
         if (error.name === 'TimeoutError') {
-          config = {
-            icon: 'info',
-            removedDelay: 4000,
-            title: 'Extrinsic timed out, Please check manually',
-            type: 'info'
-          };
+          notification.error({
+            duration: 4,
+            key: notificationKey,
+            message: 'Extrinsic timed out, Please check manually'
+          });
         } else {
-          config = {
-            icon: 'error',
-            removedDelay: 4000,
-            type: 'error'
-          };
-        }
-
-        if (Reflect.has(notification, 'update')) {
-          notification.update(config);
+          notification.error({
+            duration: 4,
+            key: notificationKey,
+            message: 'Unknown Error Occured!'
+          });
         }
 
         _onFailed();
@@ -194,10 +179,10 @@ export const TxButton: FC<PropsWithChildren<Props>> = ({
       },
       next: (isDone) => {
         if (isDone) {
-          notification.update({
-            icon: 'success',
-            removedDelay: 4000,
-            type: 'success'
+          notification.success({
+            duration: 4,
+            key: notificationKey,
+            message: 'success'
           });
           _onSuccess();
           setIsSending(false);

@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, FC, ReactNode, useState, FocusEventHandler, useCallback } from 'react';
+import React, { InputHTMLAttributes, FC, ReactNode, useState, FocusEventHandler, useCallback, forwardRef } from 'react';
 import clsx from 'clsx';
 
 import classes from './Input.module.scss';
@@ -16,7 +16,7 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
   onMax?: () => void;
 }
 
-export const Input: FC<InputProps> = ({
+export const Input: FC<InputProps> = forwardRef<HTMLDivElement, InputProps>(({
   border = true,
   className,
   error,
@@ -27,7 +27,7 @@ export const Input: FC<InputProps> = ({
   size = 'normal',
   suffix,
   ...other
-}) => {
+}, ref) => {
   const [focused, setFocused] = useState<boolean>(false);
 
   const onFocus: FocusEventHandler<HTMLInputElement> = useCallback((event) => {
@@ -58,6 +58,7 @@ export const Input: FC<InputProps> = ({
       }
       onBlur={onBlur}
       onFocus={onFocus}
+      ref={ref}
     >
       <Condition condition={!!prefix}>
         <span className={classes.prefix}>{prefix}</span>
@@ -82,4 +83,7 @@ export const Input: FC<InputProps> = ({
       <p className={clsx(classes.error, { [classes.show]: !!error })}>{error ? error.toString() : ''}</p>
     </div>
   );
-};
+});
+
+Input.displayName = 'Input';
+

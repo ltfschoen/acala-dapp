@@ -11,13 +11,11 @@ export const AUSD: FC = () => {
   const [form] = Form.useForm();
   const stableCurrencyBalance = useBalance(stableCurrency);
 
-  console.log(form);
-
   return (
     <Card>
       <div className={classes.root}>
         <div className={classes.container}>
-          <p>To Laminar</p>
+          <p>Transfer AUSD From Acala To Laminar</p>
           <Form
             form={form}
           >
