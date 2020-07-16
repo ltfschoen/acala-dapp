@@ -34,7 +34,7 @@ export interface NBalanceInputProps extends BareProps {
   decimalPlaces?: number;
 }
 
-const numberPattern = /^([1-9]\d*|0)(\.\d+)?$/;
+const numberPattern = /^([1-9][0-9]*|0)(\.[0-9]+)?$/;
 
 export const NBalanceInput: FC<NBalanceInputProps> = forwardRef<HTMLDivElement, NBalanceInputProps>(({
   border = true,
@@ -117,7 +117,7 @@ export const NBalanceInput: FC<NBalanceInputProps> = forwardRef<HTMLDivElement, 
       ref={ref}
     >
       <Condition condition={tokenPosition === 'left'}>
-        {renderToken}
+        {renderToken()}
       </Condition>
       <input
         className={classes.input}

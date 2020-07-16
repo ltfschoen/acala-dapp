@@ -1,51 +1,119 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
+import { noop, upperFirst } from 'lodash';
+import { useFormik } from 'formik';
 
-import { NBalanceInput, TxButton } from '@acala-dapp/react-components';
-import { useConstants, useBalance } from '@acala-dapp/react-hooks';
-import { Form, Card } from '@acala-dapp/ui-components';
+import { NBalanceInput, TxButton, numToFixed18Inner, LAMINAR_WATCHER_ADDRESS, getTokenName, FormatBalance } from '@acala-dapp/react-components';
+import { useConstants, useFormValidator, useBalance } from '@acala-dapp/react-hooks';
+import { Card, Select, Grid, List } from '@acala-dapp/ui-components';
 
-import classes from './AUsd.module.scss';
+import { ReactComponent as LaminarLogo } from '../../assets/laminar-logo.svg';
+import { ReactComponent as AcalaLogo } from '../../assets/acala-logo.svg';
+import classes from './AUSD.module.scss';
 
 export const AUSD: FC = () => {
   const { stableCurrency } = useConstants();
-  const [form] = Form.useForm();
   const stableCurrencyBalance = useBalance(stableCurrency);
+  const validator = useFormValidator({
+    amount: {
+      currency: stableCurrency,
+      type: 'balance'
+    },
+    channel: {
+      type: 'string'
+    }
+  });
+  const form = useFormik({
+    initialValues: {
+      amount: '' as any as number,
+      channel: 'laminar'
+    },
+    onSubmit: noop,
+    validate: validator
+  });
+
+  const handleInput = useCallback((amount) => {
+    form.setFieldValue('amount', amount);
+  }, [form]);
+
+  const handleChannelChange = useCallback((channel) => {
+    form.setFieldValue('channel', channel);
+  }, [form]);
+
+  const params = useMemo(() => {
+    const { amount, channel } = form.values;
+
+    if (channel === 'laminar') {
+      return [
+        LAMINAR_WATCHER_ADDRESS,
+        stableCurrency,
+        numToFixed18Inner(amount)
+      ];
+    }
+
+    return [];
+  }, [form, stableCurrency]);
+
+  const isDisabled = useMemo((): boolean => {
+    if (!form.values.amount || !form.values.channel) {
+      return true;
+    }
+
+    return !!form.errors.amount;
+  }, [form]);
 
   return (
     <Card>
       <div className={classes.root}>
         <div className={classes.container}>
-          <p>Transfer AUSD From Acala To Laminar</p>
-          <Form
-            form={form}
-          >
-            <Form.Item
-              name='mint'
-              rules={[{
-                max: stableCurrencyBalance.toNumber(6, 3),
-                min: 0,
-                type: 'number'
-              }]}
-            >
+          <Grid container>
+            <Grid item>
+              <Select
+                onChange={handleChannelChange}
+                value={form.values.channel}
+              >
+                <Select.Option value='laminar'>
+                  <LaminarLogo style={{ marginRight: 8 }} />
+                  Laminar
+                </Select.Option>
+              </Select>
+            </Grid>
+            <Grid item>
+              <p>Transfer {getTokenName(stableCurrency)} from Acala to {upperFirst(form.values.channel)}</p>
+            </Grid>
+            <Grid item>
               <NBalanceInput
+                error={form.errors.amount}
+                onChange={handleInput}
                 token={stableCurrency}
+                value={form.values.amount}
               />
-            </Form.Item>
-          </Form>
-          <div className={classes.actionArea}>
-            <TxButton
-              className={classes.txBtn}
-              method='transfer'
-              params={
-                [
-                  stableCurrency,
-                ]
-              }
-              section='currencies'
+              <List>
+                <List.Item
+                  label='Available'
+                  value={(
+                    <FormatBalance
+                      balance={stableCurrencyBalance}
+                      currency={stableCurrency}
+                    />
+                  )}
+                />
+              </List>
+            </Grid>
+            <Grid
+              className={classes.actionArea}
+              item
             >
-              Transfer
-            </TxButton>
-          </div>
+              <TxButton
+                className={classes.txBtn}
+                disabled={isDisabled}
+                method='transfer'
+                params={params}
+                section='currencies'
+              >
+                Transfer
+              </TxButton>
+            </Grid>
+          </Grid>
         </div>
       </div>
     </Card>

@@ -20,7 +20,6 @@ const PageWallet: FC = () => {
             <AcalaConsole />
           </Tabs.Panel>
           <Tabs.Panel
-            disabled
             key='cross-chain'
             tab='Cross-chain'
           >

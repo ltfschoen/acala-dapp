@@ -1,4 +1,4 @@
-import React, { FC, ChangeEvent, useMemo, useCallback } from 'react';
+import React, { FC, useMemo, useCallback } from 'react';
 import { noop } from 'lodash';
 import { useFormik } from 'formik';
 
@@ -7,7 +7,7 @@ import { stableCoinToDebit, Fixed18, convertToFixed18, calcLiquidationPrice, cal
 
 import { Dialog, ButtonProps, Button, List } from '@acala-dapp/ui-components';
 import { useModal, useFormValidator, useConstants, useBalance, useLoanHelper } from '@acala-dapp/react-hooks';
-import { BalanceInput, TxButton, FormatBalance, FormatFixed18 } from '@acala-dapp/react-components';
+import { NBalanceInput, TxButton, FormatBalance, FormatFixed18 } from '@acala-dapp/react-components';
 
 import classes from './LoanActionButton.module.scss';
 
@@ -199,7 +199,6 @@ export const LonaActionButton: FC<Props> = ({
     return false;
   }, [form.values, form.errors]);
 
- 
   const _close = (): void => {
     close();
     form.resetForm();
@@ -221,8 +220,8 @@ export const LonaActionButton: FC<Props> = ({
     form.setFieldValue('value', maxInput);
   };
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    form.handleChange(event);
+  const handleChange = (value?: number): void => {
+    form.setFieldValue('value', value);
   };
 
   return (
@@ -259,7 +258,7 @@ export const LonaActionButton: FC<Props> = ({
         title={dialogTitle}
         visiable={status}
       >
-        <BalanceInput
+        <NBalanceInput
           error={form.errors.value}
           id='value'
           name='value'

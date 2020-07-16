@@ -27,3 +27,4 @@ export * from './Tooltip';
 export * from './Form';
 export * from './Animation';
 export * from './notification';
+export * from './Select';
