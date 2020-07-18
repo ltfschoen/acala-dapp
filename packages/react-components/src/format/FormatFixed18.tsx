@@ -55,7 +55,7 @@ export const FormatFixed18: FC<FormatFixed18Props> = ({
 
   return (
     <Tooltip
-      placement='topRight'
+      placement='left'
       show={withTooltip}
       title={_data.toString(18, 3)}
     >

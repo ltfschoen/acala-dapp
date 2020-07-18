@@ -97,7 +97,7 @@ export const useValue = (currency: CurrencyId | string, account?: AccountLike): 
 const calcTotalAmount = (prices: PriceData[], amount: BalanceData[]): Fixed18 => {
   return amount.reduce((acc: Fixed18, current: BalanceData): Fixed18 => {
     const price = prices.find((value: PriceData): boolean => tokenEq(value.currency, current.currency));
-    const amount = (price ? price.price : Fixed18.ZERO).mul(current.balance);
+    const amount = (price?.price || Fixed18.ZERO).mul(current.balance);
 
     return acc.add(amount);
   }, Fixed18.ZERO);

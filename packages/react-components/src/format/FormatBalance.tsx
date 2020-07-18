@@ -64,7 +64,7 @@ export const FormatBalance: FC<FormatBalanceProps> = ({
 
   return (
     <Tooltip
-      placement='topRight'
+      placement='left'
       show={withTooltip}
       title={pair ? pair.map((data, index) => renderBalance(data, index, true)) : renderBalance({ balance, currency }, -1, true)}
     >

@@ -7,7 +7,6 @@ import { useConstants, useFormValidator, useBalance } from '@acala-dapp/react-ho
 import { Card, Select, Grid, List } from '@acala-dapp/ui-components';
 
 import { ReactComponent as LaminarLogo } from '../../assets/laminar-logo.svg';
-import { ReactComponent as AcalaLogo } from '../../assets/acala-logo.svg';
 import classes from './AUSD.module.scss';
 
 export const AUSD: FC = () => {
@@ -37,6 +36,10 @@ export const AUSD: FC = () => {
 
   const handleChannelChange = useCallback((channel) => {
     form.setFieldValue('channel', channel);
+  }, [form]);
+
+  const handleSuccess = useCallback(() => {
+    form.resetForm();
   }, [form]);
 
   const params = useMemo(() => {
@@ -78,7 +81,9 @@ export const AUSD: FC = () => {
               </Select>
             </Grid>
             <Grid item>
-              <p>Transfer {getTokenName(stableCurrency)} from Acala to {upperFirst(form.values.channel)}</p>
+              <p className={classes.description}>
+                Transfer {getTokenName(stableCurrency)} from Acala to {upperFirst(form.values.channel)}
+              </p>
             </Grid>
             <Grid item>
               <NBalanceInput
@@ -107,6 +112,7 @@ export const AUSD: FC = () => {
                 className={classes.txBtn}
                 disabled={isDisabled}
                 method='transfer'
+                onSuccess={handleSuccess}
                 params={params}
                 section='currencies'
               >

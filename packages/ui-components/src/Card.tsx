@@ -1,10 +1,10 @@
-import React, { ReactNode, memo } from 'react';
+import React, { ReactNode, forwardRef } from 'react';
 import clsx from 'clsx';
 
 import { BareProps } from './types';
 import classes from './Card.module.scss';
 
-interface Props extends BareProps {
+export interface CardProps extends BareProps {
   headerClassName?: string;
   contentClassName?: string;
   header?: ReactNode;
@@ -13,7 +13,7 @@ interface Props extends BareProps {
   overflowHidden?: boolean;
 }
 
-export const Card: React.FC<Props> = memo(({
+export const Card = forwardRef<HTMLDivElement, CardProps>(({
   children,
   className,
   contentClassName,
@@ -22,7 +22,7 @@ export const Card: React.FC<Props> = memo(({
   headerClassName,
   overflowHidden = false,
   padding = true
-}) => {
+}, ref) => {
   const rootClassName = clsx(
     classes.root,
     className,
@@ -41,7 +41,10 @@ export const Card: React.FC<Props> = memo(({
   );
 
   return (
-    <section className={rootClassName}>
+    <section
+      className={rootClassName}
+      ref={ref}
+    >
       { header ? <div className={clsx(headerClassName, classes.title, { [classes.divider]: divider })}>{header}</div> : null }
       <div className={_contentClassName}>
         {children}

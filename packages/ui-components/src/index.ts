@@ -1,6 +1,7 @@
 export * from './AutoComplete';
 export * from './Button';
 export * from './Card';
+export * from './Controller';
 export * from './ComingSoon';
 export * from './Dropdown';
 export * from './Dialog';
@@ -28,3 +29,4 @@ export * from './Form';
 export * from './Animation';
 export * from './notification';
 export * from './Select';
+export * from './ScrollCard';

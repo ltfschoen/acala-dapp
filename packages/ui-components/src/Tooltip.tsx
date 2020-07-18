@@ -6,10 +6,10 @@ import { Condition } from './Condition';
 import './Tooltip.scss';
 
 export type PopoverProps = AntTooltipProps & {
-  show: boolean;
+  show?: boolean;
 }
 
-export const Tooltip: FC<PopoverProps> = ({ children, show, ...other }) => {
+export const Tooltip: FC<PopoverProps> = ({ children, show = true, ...other }) => {
   return (
     <Condition
       condition={show}

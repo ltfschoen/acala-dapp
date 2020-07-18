@@ -7,6 +7,22 @@ import { Vec } from '@polkadot/types';
 import { useApi } from './useApi';
 import { Fixed18, convertToFixed18 } from '@acala-network/app-util';
 
+const LOAN_CURRENCIES_WEIGHT = new Map<string, number>([
+  ['DOT', 9],
+  ['RenBTC', 8],
+  ['LDOT', 7],
+  ['XBTC', 6]
+]);
+
+const CURRENCIES_WEIGHT = new Map<string, number>([
+  ['ACA', 9],
+  ['AUSD', 8],
+  ['DOT', 7],
+  ['RenBTC', 6],
+  ['LDOT', 5],
+  ['XBTC', 4]
+]);
+
 interface HooksReturnType {
   allCurrencies: CurrencyId[];
   crossChainCurrencies: CurrencyId[];
@@ -26,7 +42,8 @@ export const useConstants = (): HooksReturnType => {
 
   // all currencies id
   const allCurrencies = useMemo((): CurrencyId[] => {
-    const tokenList = api.registry.createType('CurrencyId' as any).defKeys as string[];
+    const tokenList = (api.registry.createType('CurrencyId' as any).defKeys as string[])
+      .sort((a, b): number => (CURRENCIES_WEIGHT.get(b.toString()) || 0) - (CURRENCIES_WEIGHT.get(a.toString()) || 0));
 
     return tokenList.map((name: string): CurrencyId => {
       return api.registry.createType('CurrencyId' as any, name) as CurrencyId;
@@ -34,12 +51,13 @@ export const useConstants = (): HooksReturnType => {
   }, [api]);
 
   const crossChainCurrencies = useMemo((): CurrencyId[] => {
-    return ['XBTC', 'AUSD', 'DOT'].map((name: string): CurrencyId => {
+    return ['AUSD', 'DOT'].map((name: string): CurrencyId => {
       return api.registry.createType('CurrencyId' as any, name) as CurrencyId;
     });
   }, [api]);
 
-  const loanCurrencies = useMemo(() => api.consts.cdpEngine.collateralCurrencyIds as Vec<CurrencyId>, [api]);
+  const loanCurrencies = useMemo(() => (api.consts.cdpEngine.collateralCurrencyIds as Vec<CurrencyId>)
+    .sort((a, b): number => (LOAN_CURRENCIES_WEIGHT.get(b.toString()) || 0) - (LOAN_CURRENCIES_WEIGHT.get(a.toString()) || 0)), [api]);
 
   // all currencies in dex
   const dexCurrencies = useMemo(() => api.consts.dex.enabledCurrencyIds as Vec<CurrencyId>, [api]);

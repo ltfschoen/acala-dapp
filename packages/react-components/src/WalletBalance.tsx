@@ -1,9 +1,8 @@
 import React, { FC, ReactNode } from 'react';
-import clsx from 'clsx';
 
 import { CurrencyId } from '@acala-network/types/interfaces';
 
-import { Card, Condition } from '@acala-dapp/ui-components';
+import { ScrollCard, Condition } from '@acala-dapp/ui-components';
 import { useConstants, useBalance } from '@acala-dapp/react-hooks';
 import { TokenImage, TokenName, UserAssetBalance, UserAssetValue, tokenEq, StakingPoolExchangeRate } from '@acala-dapp/react-components';
 
@@ -19,7 +18,7 @@ export const Balance: FC<BalanceProps> = ({ className, currency }) => {
   const liquidBalance = useBalance(liquidCurrency);
 
   return (
-    <div className={clsx(classes.item, className)}>
+    <div className={className}>
       <TokenImage
         className={classes.image}
         currency={currency}
@@ -57,20 +56,25 @@ export const WalletBalance: FC = () => {
   const { allCurrencies } = useConstants();
 
   return (
-    <Card
+    <ScrollCard
       contentClassName={classes.cardContent}
       divider={false}
       header='Wallet Balance'
+      itemClassName={classes.item}
       padding={false}
     >
       {
         allCurrencies.map((currency: CurrencyId): ReactNode => (
-          <Balance
-            currency={currency}
+          <ScrollCard.Item
+            instance={(
+              <Balance
+                currency={currency}
+              />
+            )}
             key={`wallet-balance-${currency.toString()}`}
           />
         ))
       }
-    </Card>
+    </ScrollCard>
   );
 };

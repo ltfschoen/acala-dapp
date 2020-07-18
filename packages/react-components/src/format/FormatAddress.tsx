@@ -1,4 +1,4 @@
-import React, { FC, memo, ReactNode, useMemo, useCallback } from 'react';
+import React, { FC, memo, useMemo, useCallback } from 'react';
 
 import { BareProps } from '@acala-dapp/ui-components/types';
 import { Copy } from '@acala-dapp/ui-components';

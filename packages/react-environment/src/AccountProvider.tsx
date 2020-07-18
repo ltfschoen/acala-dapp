@@ -98,12 +98,6 @@ export const AccountProvider: FC<Props> = memo(({
 
   const _addressList = useMemo<AddressInfo[]>((): AddressInfo[] => {
     const result = [
-      {
-        address: LAMINAR_WATCHER_ADDRESS,
-        meta: {
-          name: 'Laminar'
-        }
-      },
       ...accounts,
       ...addressList.map((address) => {
         return { address };

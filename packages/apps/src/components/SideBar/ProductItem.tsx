@@ -2,7 +2,7 @@ import React, { cloneElement, memo } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { SideBarItem } from '@acala-dapp/apps/types/sidebar';
-import { Condition } from '@acala-dapp/ui-components';
+import { Condition, Tooltip } from '@acala-dapp/ui-components';
 
 import classes from './Sidebar.module.scss';
 
@@ -16,7 +16,12 @@ export const ProductItem: React.FC<SideBarItem & { showTitle?: boolean }> = memo
         href={path}
         target={target}
       >
-        {cloneElement(icon)}
+        <Tooltip
+          show={!showTitle}
+          title={name}
+        >
+          {cloneElement(icon)}
+        </Tooltip>
         <Condition condition={showTitle}>
           <span className={classes.title}>
             {name}

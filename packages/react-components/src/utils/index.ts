@@ -12,7 +12,6 @@ export * from './account';
 
 dayjs.extend(duration);
 
-
 export const LAMINAR_WATCHER_ADDRESS = '5CLaminarAUSDCrossChainTransferxxxxxxxxxxxxxwisu';
 
 export const LAMINAR_SENDER_ADDRESS = '5DiKSJG59azdU8YkmYcPxSg2BNfXgph4dcJVKEn5vibyN6iK';
@@ -82,7 +81,7 @@ export const thousand = (num: number): string => {
 
 export const formatHash = (hash: string): string => {
   if (hash === LAMINAR_WATCHER_ADDRESS || hash === LAMINAR_SENDER_ADDRESS) {
-    return 'Lamina';
+    return 'Laminar';
   }
 
   return hash.replace(/(\w{6})\w*?(\w{6}$)/, '$1......$2');

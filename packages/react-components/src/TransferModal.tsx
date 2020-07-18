@@ -4,8 +4,7 @@ import clsx from 'clsx';
 import { CurrencyId } from '@acala-network/types/interfaces';
 import { CurrencyLike } from '@acala-dapp/react-hooks/types';
 import { Dialog, ArrowDownIcon, CheckedCircleIcon, FormItem, Button } from '@acala-dapp/ui-components';
-import { LAMINAR_WATCHER_ADDRESS } from '@acala-dapp/react-components';
-import { useModal, useConstants } from '@acala-dapp/react-hooks';
+import { useModal, useConstants, useAccounts } from '@acala-dapp/react-hooks';
 
 import { getTokenName, tokenEq, numToFixed18Inner } from './utils';
 import { TokenName, TokenImage, TokenFullName } from './Token';
@@ -115,7 +114,7 @@ const TransferForm: FC<TransferFormProps> = ({
   onBalanceError,
   onCurrencyChange
 }) => {
-  const { stableCurrency } = useConstants();
+  const { active } = useAccounts();
 
   return (
     <>
@@ -124,7 +123,7 @@ const TransferForm: FC<TransferFormProps> = ({
         label='Account'
       >
         <AddressInput
-          blockAddressList={tokenEq(currency, stableCurrency) ? [] : [LAMINAR_WATCHER_ADDRESS]}
+          blockAddressList={[active ? active.address : '']}
           id='account'
           name='account'
           onChange={onAccountChange}
