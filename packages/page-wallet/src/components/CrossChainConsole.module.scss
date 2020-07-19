@@ -21,6 +21,11 @@
     display: grid;
     place-items: center;
     border-right: 1px solid #ebeef5;
+
+    > img {
+      width: 42px;
+      height: 42px;
+    }
   }
 
   & > .assetName {

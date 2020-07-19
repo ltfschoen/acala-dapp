@@ -1,3 +1,3 @@
-import { notification, message } from 'antd';
+import { notification, message, Modal } from 'antd';
 
-export { notification, message };
+export { notification, message, Modal };

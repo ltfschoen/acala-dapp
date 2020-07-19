@@ -104,6 +104,11 @@ export const ApiProvider: FC<Props> = ({
   useEffect(() => {
     if (!connectStatus.connected) return;
 
+    /* eslint-disable */
+    const A = api.registry.get('ChangeOptionRate')!;
+    const a = new A(api.registry, { newValue: '1000000000000000000' });
+    console.log(a.toHex());
+
     api.rpc.system.chain().subscribe((result) => {
       setChain(result.toString());
     });

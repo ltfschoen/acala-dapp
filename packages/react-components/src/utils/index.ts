@@ -126,10 +126,14 @@ export const getValueFromTimestampValue = (origin: TimestampedValue): Codec => {
   return origin.value;
 };
 
-export const getCurrencyIdFromName = (api: ApiRx | ApiPromise, name: string): CurrencyId => {
-  const CurrencyId = api.registry.createClass('CurrencyId' as any);
+export const getCurrencyIdFromName = (api: ApiRx | ApiPromise, name: string): CurrencyId | string => {
+  try {
+    const CurrencyId = api.registry.createClass('CurrencyId' as any);
 
-  return new CurrencyId(api.registry, name);
+    return new CurrencyId(api.registry, name);
+  } catch (e) {
+    return name;
+  }
 };
 
 export const formatDuration = (duration: number): number => {

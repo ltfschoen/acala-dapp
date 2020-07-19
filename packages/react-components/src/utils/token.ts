@@ -23,7 +23,7 @@ export const ICON_FULLNAMES = {
   btc: 'Bitcoin',
   dot: 'Polkadot',
   ldot: 'Liquid DOT',
-  renbtc: 'RenVM Bitcoin',
+  renbtc: 'Ren Bitcoin',
   xbtc: 'Interchain Bitcoin'
 };
 

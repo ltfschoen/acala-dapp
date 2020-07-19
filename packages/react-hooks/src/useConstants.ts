@@ -51,7 +51,7 @@ export const useConstants = (): HooksReturnType => {
   }, [api]);
 
   const crossChainCurrencies = useMemo((): CurrencyId[] => {
-    return ['AUSD', 'DOT'].map((name: string): CurrencyId => {
+    return ['AUSD', 'RENBTC', 'DOT'].map((name: string): CurrencyId => {
       return api.registry.createType('CurrencyId' as any, name) as CurrencyId;
     });
   }, [api]);
