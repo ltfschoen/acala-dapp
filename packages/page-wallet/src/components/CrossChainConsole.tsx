@@ -27,11 +27,11 @@ const AssetCard: FC<{ currency: CurrencyLike}> = ({ currency }) => {
 
 const crossChainConsoleList: Map<string, ReactElement> = new Map([
   ['AUSD', <AUSD key='ausd' />],
-  ['RenBTC', <RenBtc key='renbtc' />]
+  ['RENBTC', <RenBtc key='renbtc' />]
 ]);
 
 const crossChainDisabled: Map<string, boolean> = new Map([
-  ['RenBTC', false],
+  ['RENBTC', false],
   ['AUSD', false],
   ['DOT', true]
 ]);

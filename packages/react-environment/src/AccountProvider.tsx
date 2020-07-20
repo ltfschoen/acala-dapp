@@ -146,7 +146,7 @@ export const AccountProvider: FC<Props> = memo(({
         }
       })
       .catch((e: Error) => {
-        setError(e.toString() as AccountProviderError);
+        setError(e.message as AccountProviderError);
       });
   }, [loadAccounts, setError, active, getStorage, open, setActiveAccount]);
 

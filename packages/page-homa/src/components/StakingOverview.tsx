@@ -8,6 +8,7 @@ import classes from './StakingOverview.module.scss';
 import { useStakingTotalAmount, useConstants, useStakingValue, useStakingRewardAPR } from '@acala-dapp/react-hooks';
 import { FormatBalance, FormatFixed18, TokenName } from '@acala-dapp/react-components';
 import { Balance as BalanceBlock } from '@acala-dapp/react-components/WalletBalance';
+import balanceClasses from '@acala-dapp/react-components/WalletBalance.module.scss';
 
 const Stake: FC = () => {
   const amount = useStakingTotalAmount();
@@ -42,7 +43,7 @@ const Balance: FC = () => {
           [stakingCurrency, liquidCurrency].map((currency) => {
             return (
               <BalanceBlock
-                className={classes.balanceBlock}
+                className={clsx(classes.balanceBlock, balanceClasses.item)}
                 currency={currency}
                 key={`staking-balance-${currency}`}
               />

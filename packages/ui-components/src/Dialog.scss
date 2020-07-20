@@ -1,7 +1,7 @@
 @import './styles/index.scss';
 
 .aca-dialog__root {
-  top: 400px !important;
+  top: 30% !important;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -10,6 +10,11 @@
   border-radius: 2px;
   background: #ffffff;
   outline: none;
+
+  &.center {
+    top: 50% !important;
+    transform: translateY(-50%);
+  }
 
   &.ant-modal {
     padding-bottom: 0;

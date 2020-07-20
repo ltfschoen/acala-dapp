@@ -30,8 +30,6 @@
       "@acala-dapp/page-deposit/*": ["page-deposit/src/*"],
       "@acala-dapp/page-governance": ["page-governance/src"],
       "@acala-dapp/page-governance/*": ["page-governance/src/*"],
-      "@acala-dapp/page-loan-charts": ["page-loan-charts/src"],
-      "@acala-dapp/page-loan-charts/*": ["page-loan-charts/src/*"],
       "@acala-dapp/react-hooks/*": ["react-hooks/src/*"],
       "@acala-dapp/react-hooks": ["react-hooks/src"],
       "@acala-dapp/react-environment/*": ["react-environment/src/*"],

@@ -16,7 +16,29 @@ export const RenBtcDialog: FC<RenBtcDialogProps> = ({
       title='Deposit BTC'
       visiable={show}
     >
-      <p>hello</p>
+
     </Dialog>
   );
 };
+
+export interface ShowBTCAddressDialogProps {
+  amount: number;
+  address: string;
+  renVMFee: number;
+  btcFee: number;
+}
+
+export const ShowBTCAddressDialog: FC<RenBtcDialogProps> = ({
+  amount,
+  show
+}) => {
+  return (
+    <Dialog
+      action={null}
+      title={null}
+      visiable={show}
+    >
+      <p>Deposit {amount} BTC</p>
+    </Dialog>
+  );
+}

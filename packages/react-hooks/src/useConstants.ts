@@ -9,7 +9,7 @@ import { Fixed18, convertToFixed18 } from '@acala-network/app-util';
 
 const LOAN_CURRENCIES_WEIGHT = new Map<string, number>([
   ['DOT', 9],
-  ['RenBTC', 8],
+  ['RENBTC', 8],
   ['LDOT', 7],
   ['XBTC', 6]
 ]);
@@ -18,7 +18,7 @@ const CURRENCIES_WEIGHT = new Map<string, number>([
   ['ACA', 9],
   ['AUSD', 8],
   ['DOT', 7],
-  ['RenBTC', 6],
+  ['RENBTC', 6],
   ['LDOT', 5],
   ['XBTC', 4]
 ]);

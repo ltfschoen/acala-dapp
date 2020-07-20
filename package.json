@@ -11,6 +11,7 @@
   },
   "scripts": {
     "start": "cd packages/apps && react-app-rewired start",
+    "analyze": "source-map-explorer 'packages/apps/build/static/js/*.js'",
     "build": "cd packages/apps && react-app-rewired build",
     "test": "polkadot-dev-run-test",
     "lint": "polkadot-dev-run-lint"
@@ -44,6 +45,7 @@
     "jest-css-modules": "^2.1.0",
     "react-app-rewired": "^2.1.5",
     "react-scripts": "^3.4.1",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "source-map-explorer": "^2.4.2"
   }
 }

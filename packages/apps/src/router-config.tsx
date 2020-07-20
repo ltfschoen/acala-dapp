@@ -1,54 +1,50 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, lazy, LazyExoticComponent, Suspense } from 'react';
 
-import PageDeposit from '@acala-dapp/page-deposit';
-import PageLoan from '@acala-dapp/page-loan';
-import PageHoma from '@acala-dapp/page-homa';
-import PageSwap from '@acala-dapp/page-swap';
-import PageWallet from '@acala-dapp/page-wallet';
 import PageGovernance from '@acala-dapp/page-governance';
-import PageLoanCharts from '@acala-dapp/page-loan-charts';
-import { Fadein } from '@acala-dapp/ui-components';
+import { PageLoading } from '@acala-dapp/ui-components';
 
 import { MainLayout } from './layouts/Main';
 import { sideBarConfig } from './sidebar-config';
 
 export interface RouterConfigData {
   children?: RouterConfigData[];
-  element?: ReactElement;
+  element?: ReactElement | LazyExoticComponent<any>;
   path: string;
   redirectTo?: string;
 }
+
+const PageWallet = lazy(() => import('@acala-dapp/page-wallet'));
+const PageDeposit = lazy(() => import('@acala-dapp/page-deposit'));
+const PageLoan = lazy(() => import('@acala-dapp/page-loan'));
+const PageHoma = lazy(() => import('@acala-dapp/page-homa'));
+const PageSwap = lazy(() => import('@acala-dapp/page-swap'));
 
 export const config: RouterConfigData[] = [
   {
     children: [
       {
-        element: <Fadein key='wallet'><PageWallet /></Fadein>,
+        element: <Suspense fallback={<PageLoading />}><PageWallet/></Suspense>,
         path: 'wallet'
       },
       {
-        element: <Fadein key='deposit'><PageDeposit /></Fadein>,
+        element: <Suspense fallback={<PageLoading />}><PageDeposit /></Suspense>,
         path: 'deposit'
       },
       {
-        element: <Fadein key='loan'><PageLoan /></Fadein>,
+        element: <Suspense fallback={<PageLoading />}><PageLoan /></Suspense>,
         path: 'loan'
       },
       {
-        element: <Fadein key='homa'><PageHoma /></Fadein>,
+        element: <Suspense fallback={<PageLoading />}><PageHoma /></Suspense>,
         path: 'homa'
       },
       {
-        element: <Fadein key='swap'><PageSwap /></Fadein>,
+        element: <Suspense fallback={<PageLoading />}><PageSwap /></Suspense>,
         path: 'swap'
       },
       {
-        element: <Fadein key='governance'><PageGovernance /></Fadein>,
+        element: <Suspense fallback={<PageLoading />}><PageGovernance /></Suspense>,
         path: 'governance'
-      },
-      {
-        element: <PageLoanCharts />,
-        path: 'anal/loan'
       },
       {
         path: '*',

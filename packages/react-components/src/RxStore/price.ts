@@ -63,10 +63,7 @@ export class PriceStore extends BaseRxStore {
           }
         }
 
-        const btcPrice = result.find((item) => item.currency.toUpperCase() === 'XBTC');
-
         result.push({ currency: 'AUSD', price: Fixed18.fromNatural(1) });
-        result.push({ currency: 'RenBTC', price: btcPrice ? btcPrice.price : Fixed18.ZERO });
 
         return result;
       }),

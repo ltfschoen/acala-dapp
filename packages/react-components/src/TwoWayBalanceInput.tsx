@@ -187,7 +187,7 @@ export const TwoWayBalanceInput: FC<TwoWayBalanceInputProps> = ({
             data={Fixed18.fromNatural((direction === 'forward' ? form.values.reference : form.values.primary) || 0)}
             prefix='≈'
           />
-          <div>
+          <div className={classes.token}>
             <TokenImage
               className={classes.tokenImage}
               currency={direction === 'forward' ? referenceCurrency : primaryCurrency}

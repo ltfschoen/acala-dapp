@@ -1,4 +1,4 @@
-import React, { FC, memo, ReactNode, createRef } from 'react';
+import React, { FC, ReactNode } from 'react';
 import clsx from 'clsx';
 import { Modal } from 'antd';
 
@@ -39,6 +39,7 @@ export const Dialog: FC<Props> = ({
       closeIcon={<CloseIcon />}
       destroyOnClose
       footer={null}
+      keyboard={true}
       onCancel={onCancel}
       title={title}
       visible={visiable}

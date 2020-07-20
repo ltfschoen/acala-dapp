@@ -146,12 +146,11 @@ const ConfirmStep: FC = () => {
         visiable={status}
       >
         <p style={{ fontSize: 19, fontWeight: 'bold' }}>Sorry that the RenVM for Acala is still in develop, we will send you some RenBTC from the faucet for test.</p>
-        <p style={{ fontSize: 14, color: '#999999' }}>you will receive 1 RenBTC and the frequency limit is one month.
-        .</p>
+        <p style={{ fontSize: 14, color: '#999999' }}>you will receive 1 RenBTC and the frequency limit is one month.</p>
       </Dialog>
       <BalanceInput
         disabled={true}
-        token='XBTC'
+        token='BTC'
         value={amount}
       />
       <List

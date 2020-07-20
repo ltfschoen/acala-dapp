@@ -5,6 +5,7 @@ import { Card, CardProps } from './Card';
 import { BareProps } from './types';
 import { Controller } from './Controller';
 import './ScrollCard.scss';
+import { uniqueId } from 'lodash';
 
 export interface ScrollCardItemProps extends BareProps {
   key: string | number;
@@ -24,17 +25,18 @@ interface ScrollCardProps extends CardProps {
   children: ReactNode;
 }
 
-export const _ScrollCard: FC<ScrollCardProps> = ({ children, itemClassName, pageSize = 5, ...other }) => {
+export const _ScrollCard: FC<ScrollCardProps> = ({ children, itemClassName, pageSize = 4, ...other }) => {
+  const idRef = useRef<string>(uniqueId());
   const $rootRef = useRef<HTMLDivElement>(null);
   const [maxPage, setMaxPage] = useState<number>(0);
   const currentPageRef = useRef<number>(0);
   const [page, setPage] = useState<number>(0);
 
   const content = useMemo(() => {
-    return Children.map(children as ReactElement[], (item: ReactElement) => {
+    return Children.map(children as ReactElement[], (item: ReactElement, index: number) => {
       return cloneElement(item, {
         className: itemClassName,
-        key: item.props.key
+        key: `scroller-carda-${idRef.current}-${index}`
       });
     });
   }, [children, itemClassName]);

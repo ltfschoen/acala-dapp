@@ -1,6 +1,5 @@
 import React, { FC, ReactNode } from 'react';
 import Identicon from '@polkadot/react-identicon';
-import CopyToClipboard from 'react-copy-to-clipboard';
 
 import { Card, Loading, CopyIcon, EditIcon, Copy } from '@acala-dapp/ui-components';
 
