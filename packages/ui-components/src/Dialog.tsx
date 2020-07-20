@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC, ReactNode, useMemo } from 'react';
 import clsx from 'clsx';
 import { Modal } from 'antd';
 
@@ -32,6 +32,40 @@ export const Dialog: FC<Props> = ({
   visiable = true,
   withClose = false
 }) => {
+  const _action = useMemo(() => {
+    if (action === null) {
+      return null;
+    }
+
+    if (action) {
+      return (
+        <div className='aca-dialog__actions'>{action}</div>
+      );
+    }
+
+    return (
+      <div className='aca-dialog__actions'>
+        {showCancel ? (
+          <Button
+            onClick={onCancel}
+            size='small'
+          >
+            {cancelText}
+          </Button>
+        ) : null}
+        {onConfirm ? (
+          <Button
+            color='primary'
+            onClick={onConfirm}
+            size='small'
+          >
+            {confirmText}
+          </Button>
+        ) : null}
+      </div>
+    );
+  }, [action, showCancel, cancelText, confirmText, onCancel, onConfirm]);
+
   return (
     <Modal
       className={clsx(className, 'aca-dialog__root')}
@@ -46,31 +80,7 @@ export const Dialog: FC<Props> = ({
       width={480}
     >
       <div>{children}</div>
-      <div className='aca-dialog__actions'>
-        {
-          action || (
-            <>
-              {showCancel ? (
-                <Button
-                  onClick={onCancel}
-                  size='small'
-                >
-                  {cancelText}
-                </Button>
-              ) : null}
-              {onConfirm ? (
-                <Button
-                  color='primary'
-                  onClick={onConfirm}
-                  size='small'
-                >
-                  {confirmText}
-                </Button>
-              ) : null}
-            </>
-          )
-        }
-      </div>
+      {_action}
     </Modal>
   );
 };

@@ -1,4 +1,4 @@
-import React, { FC, useState, ReactNode, useCallback, useMemo } from 'react';
+import React, { FC, useState, ReactNode, useCallback, useMemo, useEffect } from 'react';
 import clsx from 'clsx';
 
 import { CurrencyId } from '@acala-network/types/interfaces';
@@ -160,7 +160,7 @@ export const TransferModal: FC<TransferModalProps> = ({
   visiable
 }) => {
   const [currency, setCurrency] = useState<CurrencyLike>(defaultCurrency);
-  const { close, open, status: selectCurrencyStatus } = useModal();
+  const { close, open, status: selectCurrencyStatus, update } = useModal();
   const [account, setAccount] = useState<string>('');
   const [amount, setAmount] = useState<number>(0);
   const [accountError, setAccountError] = useState<boolean>(true);
@@ -170,7 +170,7 @@ export const TransferModal: FC<TransferModalProps> = ({
     return `Transfer ${getTokenName(currency)}`;
   }, [currency]);
 
-  const renderTransfer = (): JSX.Element => {
+  const renderTransfer = useCallback((): JSX.Element => {
     return (
       <TransferForm
         currency={currency}
@@ -181,12 +181,12 @@ export const TransferModal: FC<TransferModalProps> = ({
         onCurrencyChange={setCurrency}
       />
     );
-  };
+  }, [currency, setAccount, setAccountError, setAmount, setAmountError, setCurrency]);
 
   const renderSelect = useCallback((): ReactNode => {
     const handleSelect = (currency: CurrencyLike): void => {
       setCurrency(currency);
-      setTimeout(close, 300);
+      close();
     };
 
     return (
@@ -212,6 +212,13 @@ export const TransferModal: FC<TransferModalProps> = ({
 
     return accountError || amountError;
   }, [amount, account, accountError, amountError]);
+
+  useEffect(() => {
+    if (!visiable) {
+      setAccount('');
+      setCurrency(defaultCurrency);
+    }
+  }, [visiable, setAccount, setCurrency, defaultCurrency]);
 
   return (
     <Dialog

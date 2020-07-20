@@ -5,14 +5,46 @@ import { useFormik } from 'formik';
 import { CurrencyId } from '@acala-network/types/interfaces';
 
 import { Card, nextTick, IconButton, Condition } from '@acala-dapp/ui-components';
-import { BalanceInput, TxButton, numToFixed18Inner, DexExchangeRate, FormatFixed18, TokenName } from '@acala-dapp/react-components';
-import { useFormValidator, useBalance } from '@acala-dapp/react-hooks';
+import { BalanceInput, TxButton, numToFixed18Inner, DexExchangeRate, FormatFixed18, TokenName, FormatBalance } from '@acala-dapp/react-components';
+import { useFormValidator, useBalance, usePrice } from '@acala-dapp/react-hooks';
+import { Fixed18, convertToFixed18 } from '@acala-network/app-util';
+import { CurrencyLike } from '@acala-dapp/react-hooks/types';
 
 import classes from './SwapConsole.module.scss';
 import { SwapInfo } from './SwapInfo';
 import { SlippageInputArea } from './SlippageInputArea';
 import { SwapContext } from './SwapProvider';
-import { Fixed18, convertToFixed18 } from '@acala-network/app-util';
+
+interface MarketRateProps {
+  current: CurrencyLike;
+  target: CurrencyLike;
+}
+
+const MarketRate: FC<MarketRateProps> = ({ current, target }) => {
+  const currentPrice = usePrice(current);
+  const targetPrice = usePrice(target);
+  const rate = useMemo(() => {
+    if (!currentPrice || !targetPrice) return Fixed18.ZERO;
+
+    return currentPrice.div(targetPrice);
+  }, [currentPrice, targetPrice]);
+
+  return (
+    <FormatBalance
+      pair={[
+        {
+          balance: Fixed18.fromNatural(1),
+          currency: current
+        },
+        {
+          balance: rate,
+          currency: target
+        }
+      ]}
+      pairSymbol='='
+    />
+  );
+};
 
 interface InputAreaProps {
   addon?: ReactNode;
@@ -203,13 +235,22 @@ export const SwapConsole: FC = memo(() => {
         <SwapBtn onClick={onSwap} />
         <InputArea
           addon={
-            <div className={classes.addon}>
-              <p>Exchange Rate</p>
-              <DexExchangeRate
-                supply={pool.supplyCurrency}
-                target={pool.targetCurrency}
-              />
-            </div>
+            <>
+              <div className={classes.addon}>
+                <p>Exchange Rate</p>
+                <DexExchangeRate
+                  supply={pool.supplyCurrency}
+                  target={pool.targetCurrency}
+                />
+              </div>
+              <div className={classes.addon}>
+                <p>Market Rate</p>
+                <MarketRate
+                  current={pool.supplyCurrency}
+                  target={pool.targetCurrency}
+                />
+              </div>
+            </>
           }
           currencies={targetCurrencies}
           error={form.errors.target}

@@ -2,32 +2,21 @@ import React, { FC, createContext, useState, useContext, useCallback, useMemo } 
 import { useFormik } from 'formik';
 import { noop } from 'lodash';
 import clsx from 'clsx';
-import { ajax } from 'rxjs/ajax';
 
 import { Fixed18 } from '@acala-network/app-util';
-import { List, Button, Grid, Condition, Modal, Dialog } from '@acala-dapp/ui-components';
+import { List, Button, Grid, Condition } from '@acala-dapp/ui-components';
 import { NBalanceInput, FormatAddress, FormatBalance, BalanceInput } from '@acala-dapp/react-components';
 
 import classes from './RenBtc.module.scss';
-import { useFormValidator, useAccounts, useModal } from '@acala-dapp/react-hooks';
+import { useFormValidator, useAccounts } from '@acala-dapp/react-hooks';
 import { RenBtcDialog } from './RenBtcDialog';
-
-type MintStep = 'input' | 'confirm' | 'watch' | 'success';
-
-interface RenBtcMintContextData {
-  step: MintStep;
-  setStep: (step: MintStep) => void;
-  amount: number;
-  setAmount: (value: number) => void;
-}
-
-const RenBtcMintContext = createContext<RenBtcMintContextData>({} as RenBtcMintContextData);
+import { RenBtcMintContext, MintStep } from './RenBtcContext';
 
 const Alert: FC = () => {
   return (
     <div className={classes.alert}>
       <p>
-        RenVM is new technology and security audits don't completely
+        RenVM is new technology and security audits don&apost completely
       </p>
       <p>
         eliminate risks. Please don’t supply assets you can’t afford to lose.
@@ -118,36 +107,17 @@ const InputStep: FC = () => {
 const ConfirmStep: FC = () => {
   const { amount, setStep } = useContext(RenBtcMintContext);
   const { active } = useAccounts();
-  const { close, open, status } = useModal();
 
   const handlePrev = useCallback(() => {
     setStep('input');
   }, [setStep]);
 
   const handleNext = useCallback(() => {
-    if (!active) return;
-
-    ajax.post(
-      'https://apps.acala.network/faucet/ren',
-      { address: active.address },
-      {
-        'Content-Type': 'application/json'
-      }
-    ).subscribe();
-
-    open();
-  }, [open, active]);
+    setStep('send');
+  }, [setStep]);
 
   return (
     <div className={classes.step}>
-      <Dialog
-        onCancel={close}
-        onConfirm={close}
-        visiable={status}
-      >
-        <p style={{ fontSize: 19, fontWeight: 'bold' }}>Sorry that the RenVM for Acala is still in develop, we will send you some RenBTC from the faucet for test.</p>
-        <p style={{ fontSize: 14, color: '#999999' }}>you will receive 1 RenBTC and the frequency limit is one month.</p>
-      </Dialog>
       <BalanceInput
         disabled={true}
         token='BTC'
@@ -219,6 +189,9 @@ const ConfirmStep: FC = () => {
 
 const Inner: FC = () => {
   const context = useContext(RenBtcMintContext);
+  const showDialog = useMemo(() => {
+    return context.step === 'send' || context.step === 'watch' || context.step === 'success';
+  }, [context]);
 
   return (
     <>
@@ -228,7 +201,13 @@ const Inner: FC = () => {
       <Condition condition={context.step !== 'input'}>
         <ConfirmStep />
       </Condition>
-      <RenBtcDialog show={context.step === 'success'} />
+      <RenBtcDialog
+        amount={context.amount}
+        btcAddress={'0x16UwLL9Risc3QfPqBUvKofHmBQ7wMtjv'}
+        btcTxFee={0.000001}
+        renNetworkFee={0.000001}
+        show={showDialog}
+      />
     </>
   );
 };

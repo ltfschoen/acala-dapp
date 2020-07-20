@@ -37,7 +37,7 @@ export const FormatBalance: FC<FormatBalanceProps> = ({
   pair,
   pairSymbol,
   primary = false,
-  withTooltip = true
+  withTooltip = false
 }) => {
   const pairLength = pair ? pair.length : 0;
   const _id = useRef(randomID());

@@ -26,7 +26,7 @@ export const FormatFixed18: FC<FormatFixed18Props> = ({
   maxDecimalLength = 6,
   prefix,
   primary = false,
-  withTooltip = true
+  withTooltip = false
 }) => {
   const _data = (data || Fixed18.ZERO);
 
