@@ -1,4 +1,4 @@
-import React, { FC, createContext, useState, useContext, useCallback, useMemo } from 'react';
+import React, { FC, useState, useContext, useCallback, useMemo } from 'react';
 import { useFormik } from 'formik';
 import { noop } from 'lodash';
 import clsx from 'clsx';
@@ -16,7 +16,7 @@ const Alert: FC = () => {
   return (
     <div className={classes.alert}>
       <p>
-        RenVM is new technology and security audits don&apost completely
+        RenVM is new technology and security audits don't completely
       </p>
       <p>
         eliminate risks. Please don’t supply assets you can’t afford to lose.

@@ -1,6 +1,5 @@
 import React, { ReactNode, FC, useState, useEffect } from 'react';
-import { ApiRx } from '@polkadot/api';
-import { timeout, switchMap } from 'rxjs/operators';
+import { ApiRx } from '@polkadot/api';import { timeout, switchMap } from 'rxjs/operators';
 
 import { options } from '@acala-network/api';
 

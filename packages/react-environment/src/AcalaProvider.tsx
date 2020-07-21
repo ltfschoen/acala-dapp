@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { ConnectError, NoAccounts, NoExtensions } from '@acala-dapp/react-components';
+import { NoAccounts, NoExtensions } from '@acala-dapp/react-components';
 import { FullLoading } from '@acala-dapp/ui-components';
 import { ApiProvider, AccountProvider, GlobalStoreProvider } from '@acala-dapp/react-environment';
 import { RxStoreProvider } from '@acala-dapp/react-components/RxStore';
@@ -16,7 +16,6 @@ export const AcalaProvider: FC<AcalaProviderProps> = ({
 }) => {
   return (
     <ApiProvider
-      ConnectError={<ConnectError />}
       Loading={<FullLoading />}
     >
       <AccountProvider

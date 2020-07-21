@@ -10,9 +10,11 @@
     "@acala-network/api": "beta"
   },
   "scripts": {
-    "start": "cd packages/apps && react-app-rewired start",
+    "start:dapp": "cd packages/apps && react-app-rewired start",
+    "start:dashboard": "cd packages/dashboard && react-app-rewired start",
     "analyze": "source-map-explorer 'packages/apps/build/static/js/*.js'",
-    "build": "cd packages/apps && react-app-rewired build",
+    "build:dapp": "cd packages/apps && react-app-rewired build",
+    "build:dashboard": "cd packages/dashboard && react-app-rewired build",
     "test": "polkadot-dev-run-test",
     "lint": "polkadot-dev-run-lint"
   },
