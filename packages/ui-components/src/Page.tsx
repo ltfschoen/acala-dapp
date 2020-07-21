@@ -36,9 +36,9 @@ const _Page: FC<BareProps> = ({ children }) => {
  * @name Page.Content
  * @description dispaly content in page
  */
-const Content: FC<BareProps> = ({ children }) => {
+const Content: FC<BareProps & { fullscreen?: boolean }> = ({ children, fullscreen }) => {
   return (
-    <div className={classes.pageContent}>
+    <div className={clsx(classes.pageContent, { [classes.fullscreen]: fullscreen })}>
       {children}
     </div>
   );

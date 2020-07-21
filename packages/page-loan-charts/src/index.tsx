@@ -9,9 +9,8 @@ const PageWallet: FC = () => {
   return (
     <Page>
       <Page.Title title='Loan Analysis' />
-      <Page.Content>
-        <Grid container
-          direction='column'>
+      <Page.Content fullscreen>
+        <Grid container>
           <Grid item>
             <TotalDebitAndCollateral />
           </Grid>

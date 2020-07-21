@@ -30,7 +30,7 @@ export const ICON_FULLNAMES = {
 export const TOKEN_COLOR_MAP: Map<string, string> = new Map([
   ['BTC', '#F7931A'],
   ['XBTC', '#F7931A'],
-  ['RENBTC', '#F7931A'],
+  ['RENBTC', '#87888C'],
   ['LDOT', '#00F893'],
   ['DOT', '#e6007a']
 ]);

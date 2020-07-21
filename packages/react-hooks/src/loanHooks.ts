@@ -144,18 +144,13 @@ export const useTotalDebit = (): TotalDebitOrCollateralData | null => {
         }));
 
         const amountDetail = new Map(_result.map(([debit, rate, currency]) => {
-          const price = prices.find((item): boolean => tokenEq(item.currency, currency));
-
-          return [currency, price ? debit.mul(rate).mul(price.price) : Fixed18.ZERO];
+          return [currency, rate ? debit.mul(rate) : Fixed18.ZERO];
         }));
 
         const amount = _result.reduce((acc, cur) => {
-          const [_debit, _rate, currency] = cur;
-          const price = prices.find((item): boolean => tokenEq(item.currency, currency));
-          const debit = convertToFixed18(_debit);
-          const rate = convertToFixed18(_rate);
+          const [_debit, _rate] = cur;
 
-          return price ? acc.add(debit.mul(rate).mul(price.price)) : acc;
+          return _rate ? acc.add(_debit.mul(_rate)) : acc;
         }, Fixed18.ZERO);
 
         setResult({ amount, amountDetail, balanceDetail });

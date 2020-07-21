@@ -27,4 +27,8 @@
 .pageContent {
   max-width: 1120px;
   margin-top: 16px;
+
+  &.fullscreen {
+    max-width: 100%;
+  }
 }

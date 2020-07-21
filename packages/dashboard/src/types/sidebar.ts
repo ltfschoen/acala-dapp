@@ -11,5 +11,5 @@ export interface SideBarItem {
 
 export interface SideBarConfig {
   products: SideBarItem[];
-  socialMedia: SideBarItem[];
+  socialMedia?: SideBarItem[];
 }
