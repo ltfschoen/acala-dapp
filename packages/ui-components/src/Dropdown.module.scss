@@ -91,17 +91,6 @@
     justify-content: center;
     align-items: center;
     padding: 0 18px;
-
-    &:after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 0;
-      height: 44px;
-      width: 1px;
-      background: #ebeef5;
-      transform: translate3d(0, -50%, 0);
-    }
   }
 }
 

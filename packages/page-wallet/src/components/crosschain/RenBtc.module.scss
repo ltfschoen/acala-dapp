@@ -28,7 +28,7 @@
 
   .inputStepInfo {
     position: relative;
-    border: 1px solid #cccccc;
+    border: 1px solid #E9E9E9;
     border-radius: 2px;
 
     &::after {
@@ -39,7 +39,7 @@
       left: 19.5px;
       width: 1px;
       height: 60px;
-      background: #cccccc;
+      background: #E9E9E9;
     }
 
     & .item {
@@ -82,7 +82,7 @@
   .confirmInfo {
     margin-top: 16px;
     padding: 0 24px;
-    border: 1px solid #cccccc;
+    border: 1px solid #E9E9E9;
     border-radius: 2px;
 
     .item {
@@ -91,7 +91,7 @@
       line-height: 19px;
       color: #333333;
 
-      border-color: #cccccc;
+      border-color: #E9E9E9;
     }
   }
 

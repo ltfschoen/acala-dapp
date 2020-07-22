@@ -68,6 +68,7 @@ export const Dialog: FC<Props> = ({
 
   return (
     <Modal
+      centered
       className={clsx(className, 'aca-dialog__root')}
       closable={withClose}
       closeIcon={<CloseIcon />}
