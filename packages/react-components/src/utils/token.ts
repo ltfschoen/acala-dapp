@@ -28,6 +28,7 @@ export const ICON_FULLNAMES = {
 };
 
 export const TOKEN_COLOR_MAP: Map<string, string> = new Map([
+  ['SYSTEM', '#173DC9'],
   ['BTC', '#F7931A'],
   ['XBTC', '#F7931A'],
   ['RENBTC', '#87888C'],
@@ -37,7 +38,7 @@ export const TOKEN_COLOR_MAP: Map<string, string> = new Map([
 
 export function getTokenColor (token: CurrencyLike): string {
   // default color is black
-  return TOKEN_COLOR_MAP.get(token.toString()) || '#000000';
+  return TOKEN_COLOR_MAP.get(token.toString().toUpperCase()) || '#000000';
 }
 
 export function getTokenImage (token: CurrencyLike): string {

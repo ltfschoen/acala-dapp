@@ -1,5 +1,5 @@
 import React, { ReactNode, FC, useState, useEffect } from 'react';
-import { ApiRx } from '@polkadot/api';import { timeout, switchMap } from 'rxjs/operators';
+import { ApiRx } from '@polkadot/api'; import { timeout, switchMap } from 'rxjs/operators';
 
 import { options } from '@acala-network/api';
 
@@ -89,7 +89,7 @@ export const ApiProvider: FC<Props> = ({
       timeout(MAX_CONNECT_TIME)
     ).subscribe({
       error: (): void => {
-        setConnectStatus({ connected: false, error: true, loading: false });
+        // setConnectStatus({ connected: false, error: true, loading: false });
       },
       next: (result): void => {
         setApi(result);
@@ -111,12 +111,13 @@ export const ApiProvider: FC<Props> = ({
   useEffect(() => {
     if (!connectStatus.connected) return;
 
-    api.on('disconnected', () => {
-      setConnectStatus({ connected: false, error: true, loading: false });
-    });
-    api.on('error', () => {
-      setConnectStatus({ connected: false, error: true, loading: false });
-    });
+    // disable error check
+    // api.on('disconnected', () => {
+    //   setConnectStatus({ connected: false, error: true, loading: false });
+    // });
+    // api.on('error', () => {
+    //   setConnectStatus({ connected: false, error: true, loading: false });
+    // });
 
     return (): void => api.disconnect();
   }, [api, connectStatus]);

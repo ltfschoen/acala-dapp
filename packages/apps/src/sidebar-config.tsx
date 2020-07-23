@@ -50,7 +50,7 @@ export const sideBarConfig: SideBarConfig = {
       icon: <FaucetSVG />,
       isExternal: true,
       name: 'Faucet',
-      path: 'https://discord.com/channels/709208197549785148/709208400176742441',
+      path: 'https://discord.gg/CmqXvMP',
       target: '_blank'
     },
     {
@@ -73,6 +73,6 @@ export const sideBarConfig: SideBarConfig = {
       name: 'Twitter',
       path: 'https://twitter.com/AcalaNetwork',
       target: '_blank'
-    },
+    }
   ]
 };

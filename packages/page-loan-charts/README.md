@@ -1,1 +1,1 @@
-@acala-dapp/page-overview
+@acala-dapp/page-loan-charts

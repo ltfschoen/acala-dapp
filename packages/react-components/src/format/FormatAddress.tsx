@@ -32,6 +32,8 @@ export const FormatAddress: FC<Props> = memo(({
       return address;
     }
 
+    if (!address) return '';
+
     return address.replace(/(\w{6})\w*?(\w{6}$)/, '$1......$2');
   }, [address, withFullAddress]);
 

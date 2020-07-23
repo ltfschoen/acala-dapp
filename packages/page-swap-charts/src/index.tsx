@@ -1,31 +1,31 @@
 import React, { FC } from 'react';
 
 import { Page, Grid } from '@acala-dapp/ui-components';
-
-import { LoanCollateralRatio } from './components/LoanCollateralRatio';
-import { TotalDebitAndCollateral } from './components/TotalDebitAndCollateral';
-import { LoansOverview } from './components/LoansOverview';
+import { SwapPool } from './components/SwapPool';
+import { SwapPoolDetail } from './components/SwapPoolDetail';
 
 const PageWallet: FC = () => {
   return (
     <Page>
-      <Page.Title title='Loan Analysis' />
+      <Page.Title title='Swap Analysis' />
       <Page.Content fullscreen>
         <Grid container>
-          <Grid item>
-            <TotalDebitAndCollateral />
+          <Grid
+            item
+            span={12}
+          >
+            <SwapPool />
           </Grid>
           <Grid
             item
             span={12}
           >
-            <LoansOverview />
+            <SwapPoolDetail />
           </Grid>
           <Grid
             item
             span={12}
           >
-            <LoanCollateralRatio />
           </Grid>
         </Grid>
       </Page.Content>

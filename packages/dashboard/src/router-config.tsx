@@ -13,6 +13,8 @@ export interface RouterConfigData {
 }
 
 const PageLoanCharts = lazy(() => import('@acala-dapp/page-loan-charts'));
+const PageSwapCharts = lazy(() => import('@acala-dapp/page-swap-charts'));
+const PageTreasuryCharts = lazy(() => import('@acala-dapp/page-treasury-charts'));
 
 export const config: RouterConfigData[] = [
   {
@@ -20,6 +22,14 @@ export const config: RouterConfigData[] = [
       {
         element: <Suspense fallback={<PageLoading />}><PageLoanCharts/></Suspense>,
         path: 'loan'
+      },
+      {
+        element: <Suspense fallback={<PageLoading />}><PageSwapCharts /></Suspense>,
+        path: 'swap'
+      },
+      {
+        element: <Suspense fallback={<PageLoading />}><PageTreasuryCharts /></Suspense>,
+        path: 'treasury'
       },
       {
         path: '*',

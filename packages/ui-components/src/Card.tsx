@@ -8,6 +8,7 @@ export interface CardProps extends BareProps {
   headerClassName?: string;
   contentClassName?: string;
   header?: ReactNode;
+  extra?: ReactNode;
   divider?: boolean;
   padding?: boolean;
   overflowHidden?: boolean;
@@ -18,6 +19,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(({
   className,
   contentClassName,
   divider = true,
+  extra,
   header,
   headerClassName,
   overflowHidden = false,
@@ -45,7 +47,10 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(({
       className={rootClassName}
       ref={ref}
     >
-      { header ? <div className={clsx(headerClassName, classes.title, { [classes.divider]: divider })}>{header}</div> : null }
+      { header ? <div className={clsx(headerClassName, classes.title, { [classes.divider]: divider })}>
+        {header}
+        {extra ? <div className={classes.extra}>{extra}</div> : null}
+      </div> : null }
       <div className={_contentClassName}>
         {children}
       </div>

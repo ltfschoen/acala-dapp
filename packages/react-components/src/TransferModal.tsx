@@ -216,9 +216,10 @@ export const TransferModal: FC<TransferModalProps> = ({
   useEffect(() => {
     if (!visiable) {
       setAccount('');
+      update(false);
       setCurrency(defaultCurrency);
     }
-  }, [visiable, setAccount, setCurrency, defaultCurrency]);
+  }, [visiable, setAccount, setCurrency, defaultCurrency, update]);
 
   return (
     <Dialog

@@ -1,4 +1,4 @@
-import React, { FC, Suspense, ReactNode, useState, useEffect, useMemo } from 'react';
+import React, { FC, Suspense, useState, useEffect, useMemo } from 'react';
 import clsx from 'clsx';
 
 import { BareProps } from './types';

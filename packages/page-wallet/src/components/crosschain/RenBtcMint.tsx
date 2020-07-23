@@ -233,4 +233,4 @@ export const RenBtcMint: FC = () => {
       </div>
     </RenBtcMintContext.Provider>
   );
-}
+};

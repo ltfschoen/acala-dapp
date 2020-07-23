@@ -34,9 +34,9 @@ const OverviewDataDisplay: FC<OverviewDataDisplayProps> = ({ data, title }) => {
 
     data.amountDetail.forEach((data, currency): void => {
       result.push({
-        count: data.toNumber(2, 2),
+        count: data.toNumber(2, 3),
         item: getTokenName(currency),
-        percent: data.div(_total).toNumber(2, 2)
+        percent: data.div(_total).toNumber(2, 3)
       });
     });
 
@@ -59,16 +59,13 @@ const OverviewDataDisplay: FC<OverviewDataDisplayProps> = ({ data, title }) => {
       span={12}
     >
       <Card
-        header={(
-          <p className={classes.title}>
-            {title}
-            <FormatFixed18
-              className={classes.amount}
-              data={data.amount}
-              prefix='≈ $US'
-            />
-          </p>
-        )}
+        extra={
+          <FormatFixed18
+            data={data.amount}
+            prefix='≈ $ '
+          />
+        }
+        header={title}
       >
         <div className={classes.chart}>
           <Chart

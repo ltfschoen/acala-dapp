@@ -15,11 +15,19 @@
 }
 
 .title {
+  display: flex;
+  justify-content: space-between;
   padding: 20px 24px;
   color: $color-black;
   font-size: 18px;
   line-height: 21px;
   font-weight: 500;
+
+  .extra {
+    font-size: 16px;
+    font-weight: normal;
+    color: #999999;
+  }
 
   &.divider {
     font-size: 20px;

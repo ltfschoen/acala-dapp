@@ -1,7 +1,7 @@
 {
-  "name": "@acala-dapp/page-loan-charts",
+  "name": "@acala-dapp/page-treasury-charts",
   "version": "0.2.0",
-  "description": "page loan charts",
+  "description": "page swap charts",
   "main": "index.js",
   "author": "Acala Developers <hello@acala.network>",
   "homepage": "https://github.com/AcalaNetwork/acala-dapp#readme",

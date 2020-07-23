@@ -30,7 +30,7 @@ export const DexExchangeRate: FC<Props> = memo(({ supply, target }) => {
       setRatio(Fixed18.fromRational(
         targetPool.base.toString(),
         targetPool.other.toString()
-      ).mul(Fixed18.fromNatural(1 - 0.3)));
+      ));
       setSupplyToken(target);
       setTargetToken(dexBaseCurrency);
     }
@@ -39,7 +39,7 @@ export const DexExchangeRate: FC<Props> = memo(({ supply, target }) => {
       setRatio(Fixed18.fromRational(
         supplyPool.base.toString(),
         supplyPool.other.toString()
-      ).mul(Fixed18.fromNatural(1 - 0.01)));
+      ));
       setSupplyToken(supply);
       setTargetToken(dexBaseCurrency);
     }

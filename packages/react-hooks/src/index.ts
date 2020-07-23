@@ -21,6 +21,7 @@ export * from './balanceHooks';
 export * from './priceHooks';
 
 // dex
+export * from './swapHooks';
 export * from './useDexExchangeRate';
 export * from './useDexShare';
 export * from './useDexReward';
@@ -42,5 +43,9 @@ export * from './useCouncilMembers';
 // emergency shoutdown
 export * from './useEmergencyShoutdown';
 export * from './useRefundCollateral';
+
+// treasury & auction
+export * from './treasuryHooks';
+export * from './auctionHooks';
 
 export * from './utils';

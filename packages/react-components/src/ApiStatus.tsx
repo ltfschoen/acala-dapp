@@ -7,7 +7,7 @@ import classes from './ApiStatus.module.scss';
 import clsx from 'clsx';
 
 export const ApiStatus: FC<BareProps> = memo(({ className }) => {
-  const { connected, error, loading, chain } = useApi();
+  const { chain, connected, error, loading } = useApi();
 
   const getStatusText = (): string => {
     if (loading) {
