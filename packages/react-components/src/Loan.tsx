@@ -3,7 +3,6 @@ import { CurrencyLike } from '@acala-dapp/react-hooks/types';
 import { FormatFixed18Props, FormatFixed18, FormatBalanceProps, FormatBalance } from './format';
 import { useLoanHelper, useConstants, useLoanType, useLoanOverview, usePrice } from '@acala-dapp/react-hooks';
 import { convertToFixed18, Fixed18 } from '@acala-network/app-util';
-import { Fixed128 } from '@acala-network/types/interfaces';
 
 type LoanPropertyProps<T> = T & {
   currency: CurrencyLike;

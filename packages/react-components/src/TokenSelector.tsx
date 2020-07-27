@@ -27,7 +27,7 @@ export const TokenSelector: FC<Props> = memo(({
   showIcon
 }) => {
   const { api } = useApi();
-  const [_currencies, setCurrencies] = useState<(CurrencyId)[]>([]);
+  const [_currencies, setCurrencies] = useState<(CurrencyLike)[]>([]);
   const { allCurrencies } = useConstants();
 
   // format currencies and set default vlaue if need
@@ -36,8 +36,8 @@ export const TokenSelector: FC<Props> = memo(({
     if (!currencies) {
       setCurrencies(allCurrencies);
     } else {
-      // convert string to CurrencyId
-      const result = currencies.map((item: CurrencyLike): CurrencyId => {
+      // try to convert string to CurrencyId
+      const result = currencies.map((item: CurrencyLike): CurrencyLike => {
         if (typeof item === 'string') {
           return getCurrencyIdFromName(api, item);
         }
@@ -53,7 +53,7 @@ export const TokenSelector: FC<Props> = memo(({
     return null;
   }
 
-  const config: DropdownConfig[] = _currencies.map((currency: CurrencyId) => ({
+  const config: DropdownConfig[] = _currencies.map((currency: CurrencyLike) => ({
     /* eslint-disable-next-line react/display-name */
     render: (): ReactNode => {
       return (

@@ -1,4 +1,4 @@
-import React, { useState, memo, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 
 import { AnyFunction } from '@polkadot/types/types';
 import Identicon from '@polkadot/react-identicon';

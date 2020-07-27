@@ -78,10 +78,10 @@ export const useConstants = (): HooksReturnType => {
   const minmumDebitValue = useMemo<Fixed18>(() => convertToFixed18(api.consts.cdpEngine.minimumDebitValue), [api]);
 
   // staking currency
-  const stakingCurrency = useMemo(() => api.consts.stakingPool.stakingCurrencyId as Currency, [api]);
+  const stakingCurrency = useMemo(() => api.consts.stakingPool.stakingCurrencyId as CurrencyId, [api]);
 
   // liquid currency
-  const liquidCurrency = useMemo(() => api.consts.stakingPool.liquidCurrencyId as Currency, [api]);
+  const liquidCurrency = useMemo(() => api.consts.stakingPool.liquidCurrencyId as CurrencyId, [api]);
 
   return {
     allCurrencies,

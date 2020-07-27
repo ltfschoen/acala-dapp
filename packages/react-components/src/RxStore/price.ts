@@ -2,7 +2,7 @@ import { Observable, combineLatest, Subscription, interval } from 'rxjs';
 import { map, shareReplay, startWith, mergeMap } from 'rxjs/operators';
 import { ApiRx } from '@polkadot/api';
 
-import { DerivedPrice, DerivedDexPool } from '@acala-network/api-derive';
+import { DerivedDexPool } from '@acala-network/api-derive';
 import { convertToFixed18, Fixed18 } from '@acala-network/app-util';
 import { CurrencyId, OracleKey } from '@acala-network/types/interfaces';
 import { TimestampedValue } from '@open-web3/orml-types/interfaces';

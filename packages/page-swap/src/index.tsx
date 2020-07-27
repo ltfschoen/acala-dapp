@@ -14,7 +14,6 @@ const PageSwap: FC = () => {
         <Page.Title title='Swap' />
         <Page.Content>
           <Grid container
-            direction='column'
             item>
             <Grid item>
               <WalletBalance />

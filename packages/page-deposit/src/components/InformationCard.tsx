@@ -34,7 +34,7 @@ export const SystemCard: FC = () => {
             balance={totalReward.amount}
             className={classes.listContent}
             currency={totalReward.token}
-            decimalLength={2}
+            maxDecimalLength={2}
             withTooltip={false}
           />
         </li>
@@ -75,7 +75,7 @@ export const UserCard: FC = () => {
             balance={totalRewawrd.amount}
             className={classes.listContent}
             currency={totalRewawrd.token}
-            decimalLength={2}
+            maxDecimalLength={2}
             withTooltip={false}
           />
         </li>
@@ -85,7 +85,7 @@ export const UserCard: FC = () => {
             balance={totalDeposit.amount}
             className={classes.listContent}
             currency={totalDeposit.token}
-            decimalLength={2}
+            maxDecimalLength={2}
             withTooltip={false}
           />
         </li>

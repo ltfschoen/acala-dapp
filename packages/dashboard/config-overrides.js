@@ -6,7 +6,7 @@ const findPackages = require('../../scripts/findPackages');
 
 const packages = findPackages();
 
-module.exports = override(function (config, env) {
+module.exports = override(function (config) {
   // include lib
   config.module.rules.forEach((rule) => {
     if (!Reflect.has(rule, 'oneOf')) {

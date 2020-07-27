@@ -101,9 +101,9 @@ export const SwapProvider: FC<PropsWithChildren<{}>> = memo(({ children }) => {
       ]).subscribe(([supplyPool, targetPool]) => {
         setPool({
           supplyCurrency: supply,
-          supplySize: convertToFixed18(targetPool.other).toNumber(),
+          supplySize: convertToFixed18(supplyPool.other).toNumber(),
           targetCurrency: target,
-          targetSize: convertToFixed18(supplyPool.other).toNumber()
+          targetSize: convertToFixed18(targetPool.other).toNumber()
         });
       });
     }

@@ -3,8 +3,7 @@ import React, { FC, useMemo } from 'react';
 import { Table } from 'antd';
 import { Card } from '@acala-dapp/ui-components';
 import { useConstants, useSwapOverview } from '@acala-dapp/react-hooks';
-import { Token, TotalCollateral, TotalDebit, RequiredCollateralRatio, LiquidationRatio, TotalCollateralRatio, Price, FormatFixed18, FormatBalance } from '@acala-dapp/react-components';
-import { over } from 'lodash';
+import { Token, Price, FormatFixed18, FormatBalance } from '@acala-dapp/react-components';
 
 export const SwapPoolDetail: FC = () => {
   const overview = useSwapOverview();
@@ -56,7 +55,7 @@ export const SwapPoolDetail: FC = () => {
         title: 'Value'
       }
     ];
-  }, []);
+  }, [stableCurrency]);
 
   if (!overview) return null;
 

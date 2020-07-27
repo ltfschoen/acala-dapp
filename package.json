@@ -7,7 +7,8 @@
   ],
   "resolutions": {
     "@polkadot/api": "^1.15.1",
-    "@acala-network/api": "beta"
+    "@acala-network/api": "^0.3.1",
+    "@acala-network/types": "^0.3.1"
   },
   "scripts": {
     "start:dapp": "cd packages/apps && react-app-rewired start",

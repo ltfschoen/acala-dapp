@@ -9,22 +9,6 @@ import clsx from 'clsx';
 export const ApiStatus: FC<BareProps> = memo(({ className }) => {
   const { chain, connected, error, loading } = useApi();
 
-  const getStatusText = (): string => {
-    if (loading) {
-      return 'Connecting';
-    }
-
-    if (error) {
-      return 'Error';
-    }
-
-    if (connected) {
-      return 'Connected';
-    }
-
-    return '';
-  };
-
   return (
     <div className={
       clsx(

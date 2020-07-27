@@ -4,7 +4,7 @@ import { web3Accounts, web3Enable, web3FromAddress } from '@polkadot/extension-d
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
 import { useModal, useApi, useStorage } from '@acala-dapp/react-hooks';
-import { SelectAccount, isValidateAddress, LAMINAR_WATCHER_ADDRESS } from '@acala-dapp/react-components';
+import { SelectAccount, isValidateAddress } from '@acala-dapp/react-components';
 import { BareProps } from '@acala-dapp/ui-components/types';
 
 type AccountProviderError = 'NO_EXTENSIONS' | 'NO_ACCOUNTS' | '';

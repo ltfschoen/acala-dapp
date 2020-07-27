@@ -14,12 +14,12 @@ describe('test utils', () => {
   });
 
   test('effectiveDecimal should work', () => {
-    expect(effectiveDecimal(12.012345, 3)).toEqual('12.0123');
-    expect(effectiveDecimal('12.04', 3)).toEqual('12.04');
-    expect(effectiveDecimal(12.000000000001, 1)).toEqual('12.000000000001');
-    expect(effectiveDecimal(1.2e-8, 2)).toEqual('0.000000012');
-    expect(effectiveDecimal(1, 2)).toEqual('1.00');
-    expect(effectiveDecimal(1.101, 2)).toEqual('1.10');
+    expect(effectiveDecimal(12.012345, 3, 6)).toEqual('12.0123');
+    expect(effectiveDecimal('12.04', 3, 6)).toEqual('12.04');
+    expect(effectiveDecimal(12.000000000001, 1, 6)).toEqual('12.00');
+    expect(effectiveDecimal(1.2e-8, 2, 9)).toEqual('0.000000012');
+    expect(effectiveDecimal(1, 2, 6)).toEqual('1.00');
+    expect(effectiveDecimal(1.101, 2, 6)).toEqual('1.10');
   });
 
 

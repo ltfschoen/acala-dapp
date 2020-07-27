@@ -1,11 +1,11 @@
 import React, { memo, FC, ReactNode, useState, createRef, useEffect } from 'react';
 import clsx from 'clsx';
 
-import { Dropdown as AntDropdown } from 'antd';
+// import { Dropdown as AntDropdown } from 'antd';
 
 import { ReactComponent as ArrowDownIcon } from './assets/arrow-down.svg';
-import { BareProps } from './types';
 import classes from './Dropdown.module.scss';
+import { BareProps } from './types';
 
 export interface DropdownConfig {
   value: any;

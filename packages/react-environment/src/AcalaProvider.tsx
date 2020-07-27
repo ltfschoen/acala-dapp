@@ -14,6 +14,7 @@ export const AcalaProvider: FC<AcalaProviderProps> = ({
   applicationName = 'Acala Dapp',
   children
 }) => {
+  /* eslint-disable react/jsx-sort-props */
   return (
     <ApiProvider Loading={<FullLoading />}>
       <AccountProvider
@@ -32,4 +33,5 @@ export const AcalaProvider: FC<AcalaProviderProps> = ({
       </AccountProvider>
     </ApiProvider>
   );
+  /* eslint-enable react/jsx-sort-props */
 };

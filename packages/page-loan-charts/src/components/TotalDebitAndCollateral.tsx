@@ -1,5 +1,4 @@
 import React, { FC, useMemo } from 'react';
-import { ResponsivePie, PieDatumWithColor } from '@nivo/pie';
 
 import { Card, Grid } from '@acala-dapp/ui-components';
 import { Chart, Interval, Tooltip, Axis, Coordinate, Interaction } from 'bizcharts';

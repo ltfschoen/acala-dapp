@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo, useContext } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Observable, combineLatest, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -6,13 +6,10 @@ import { DerivedStakingPool } from '@acala-network/api-derive';
 import { StakingPoolHelper, Fixed18, convertToFixed18 } from '@acala-network/app-util';
 import { Amount, Rate, BlockNumber, Balance } from '@acala-network/types/interfaces';
 
-import { AccountLike } from './types';
 import { useApi } from './useApi';
 import { useCall } from './useCall';
 import { useAccounts } from './useAccounts';
 import { useRxStore } from './useRxStore';
-import { useBalance } from './balanceHooks';
-import { useConstants } from './useConstants';
 
 export interface FreeItem {
   era: number;

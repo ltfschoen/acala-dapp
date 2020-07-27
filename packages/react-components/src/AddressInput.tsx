@@ -7,7 +7,6 @@ import { useAccounts } from '@acala-dapp/react-hooks';
 import classes from './AddressInput.module.scss';
 import { isValidateAddress } from './utils';
 import { FormatAddress } from './format';
-import { xor } from 'lodash';
 
 interface AddressInputProps extends Omit<InputProps, 'onError' | 'onChange'>{
   onChange: (address: string) => void;

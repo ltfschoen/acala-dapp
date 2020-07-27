@@ -12,6 +12,7 @@ import { useFormValidator, useAccounts } from '@acala-dapp/react-hooks';
 import { RenBtcDialog } from './RenBtcDialog';
 import { RenBtcMintContext, MintStep } from './RenBtcContext';
 
+/* eslint-disable  react/no-unescaped-entities */
 const Alert: FC = () => {
   return (
     <div className={classes.alert}>
@@ -24,6 +25,7 @@ const Alert: FC = () => {
     </div>
   );
 };
+/* eslint-enable react/no-unescaped-entities */
 
 const InputStep: FC = () => {
   const { setAmount, setStep } = useContext(RenBtcMintContext);

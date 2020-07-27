@@ -1,3 +1,6 @@
+/* eslint-disable */
+// TODO: need update
+
 import React, { FC, useMemo } from 'react';
 import { Card, Table, TableConfig } from '@acala-dapp/ui-components';
 import { useHistory, useAccounts } from '@acala-dapp/react-hooks';
@@ -33,13 +36,13 @@ export const BaseTxHistory: FC<Props> = ({
     signer: active ? active.address : ''
   });
 
-  const count = useMemo(() => {
-    return Math.ceil(pagination.total / pagination.pageSize);
-  }, [pagination]);
+  // const count = useMemo(() => {
+  //   return Math.ceil(pagination.total / pagination.pageSize);
+  // }, [pagination]);
 
-  const handlePaginationChagne = (_event: any, page: number): void => {
-    onPaginationChagne({ currentPage: page - 1 });
-  };
+  // const handlePaginationChagne = (_event: any, page: number): void => {
+  //   onPaginationChagne({ currentPage: page - 1 });
+  // };
 
   return (
     <Card

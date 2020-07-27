@@ -6,7 +6,7 @@ import { EventRecord } from '@polkadot/types/interfaces';
 
 import { useApi, useAccounts } from '@acala-dapp/react-hooks';
 import { notification } from '@acala-dapp/ui-components';
-import { convertToFixed18, Fixed18 } from '@acala-network/app-util';
+import { Fixed18 } from '@acala-network/app-util';
 import { getTokenName, formatHash } from './utils';
 
 interface HandlerConfig {

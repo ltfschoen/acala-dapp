@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC } from 'react';
 import clsx from 'clsx';
 
 import { Fixed18 } from '@acala-network/app-util';

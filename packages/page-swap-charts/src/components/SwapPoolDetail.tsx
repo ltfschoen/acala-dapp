@@ -3,7 +3,7 @@ import React, { FC, useMemo } from 'react';
 import { Table } from 'antd';
 import { Card } from '@acala-dapp/ui-components';
 import { useConstants, useSwapOverview } from '@acala-dapp/react-hooks';
-import { Token, Price, FormatFixed18, FormatBalance, DexExchangeRate } from '@acala-dapp/react-components';
+import { Token, FormatFixed18, FormatBalance, DexExchangeRate } from '@acala-dapp/react-components';
 
 export const SwapPoolDetail: FC = () => {
   const overview = useSwapOverview();

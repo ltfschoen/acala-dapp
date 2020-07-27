@@ -81,13 +81,15 @@ export const thousand = (num: number): string => {
   return num.toLocaleString(undefined, { maximumSignificantDigits: 18, minimumFractionDigits: 5 });
 };
 
-export const formatHash = (hash: string, name = false): string => {
-  if (hash === LAMINAR_WATCHER_ADDRESS || hash === LAMINAR_SENDER_ADDRESS) {
-    return 'Laminar';
-  }
+export const formatHash = (hash: string, name = true): string => {
+  if (name) {
+    if (hash === LAMINAR_WATCHER_ADDRESS || hash === LAMINAR_SENDER_ADDRESS) {
+      return 'Laminar';
+    }
 
-  if (hash === FAUCET_ADDRESS) {
-    return 'Faucet';
+    if (hash === FAUCET_ADDRESS) {
+      return 'Faucet';
+    }
   }
 
   return hash.replace(/(\w{6})\w*?(\w{6}$)/, '$1......$2');
