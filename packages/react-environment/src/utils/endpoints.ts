@@ -27,7 +27,7 @@ export const selectFastestEndpoints = (endpoints: EndpointConfig[]): Observable<
   const _collective: WsProvider[] = [];
 
   return race(endpoints.map((config) => {
-    const wsProvider = new WsProvider(config.url, false);
+    const wsProvider = new WsProvider(config.url);
 
     _collective.push(wsProvider);
 

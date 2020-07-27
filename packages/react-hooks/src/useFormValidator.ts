@@ -51,7 +51,7 @@ export function getFormValidator<T> (config: Config, api: ApiRx, active: Injecte
           const subscriber = ((api.derive as any).currencies.balance(active.address, _config.currency) as Observable<Amount>).subscribe((result: Amount) => {
             const _balance = convertToFixed18(result);
             const _value = Fixed18.fromNatural(value);
-            const _max = Fixed18.fromNatural(_config.max !== undefined ? _config.max : Number.MAX_VALUE);
+            const _max = Fixed18.fromNatural(_config.max !== undefined ? _config.max : 100000);
             const _min = Fixed18.fromNatural(_config.min !== undefined ? _config.min : 0);
 
             if (!numberPattern.test(value)) {

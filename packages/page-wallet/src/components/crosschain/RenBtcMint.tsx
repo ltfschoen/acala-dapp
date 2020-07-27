@@ -29,6 +29,7 @@ const InputStep: FC = () => {
   const { setAmount, setStep } = useContext(RenBtcMintContext);
   const validator = useFormValidator({
     amount: {
+      max: 100000000,
       min: 0,
       type: 'number'
     }
@@ -42,6 +43,8 @@ const InputStep: FC = () => {
   });
 
   const isDisabled = useMemo<boolean>((): boolean => {
+    if (form.errors.amount) return true;
+
     return !form.values.amount;
   }, [form]);
 
@@ -60,6 +63,7 @@ const InputStep: FC = () => {
         <Grid item>
           <NBalanceInput
             className={classes.input}
+            error={form.errors.amount}
             onChange={handleInput}
             token='BTC'
             value={form.values.amount}

@@ -169,7 +169,7 @@ export const TxButton: FC<PropsWithChildren<Props>> = ({
           notification.error({
             duration: 4,
             key: notificationKey,
-            message: 'Unknown Error Occured!'
+            message: `Unknown Error Occured! ${error.message}`
           });
         }
 

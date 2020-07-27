@@ -1,16 +1,22 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 
 import { Page, Tabs } from '@acala-dapp/ui-components';
 import { AcalaConsole } from './components/AcalaConsole';
 import { CrossChainConsole } from './components/CrossChainConsole';
+import { WalletProvider, WalletContext } from './components/WalletContext';
 
-const PageWallet: FC = () => {
+const Inner: FC = () => {
+  const { changeTab, tab } = useContext(WalletContext);
+
+  console.log('tab', tab);
+
   return (
     <Page>
       <Page.Title title='Wallet' />
       <Page.Content>
         <Tabs
-          defaultKey='acala'
+          defaultKey={tab}
+          onChange={changeTab}
           type='button'
         >
           <Tabs.Panel
@@ -28,6 +34,14 @@ const PageWallet: FC = () => {
         </Tabs>
       </Page.Content>
     </Page>
+  );
+};
+
+const PageWallet: FC = () => {
+  return (
+    <WalletProvider>
+      <Inner />
+    </WalletProvider>
   );
 };
 

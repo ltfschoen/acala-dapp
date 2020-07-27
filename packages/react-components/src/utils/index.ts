@@ -16,6 +16,8 @@ export const LAMINAR_WATCHER_ADDRESS = '5CLaminarAUSDCrossChainTransferxxxxxxxxx
 
 export const LAMINAR_SENDER_ADDRESS = '5DiKSJG59azdU8YkmYcPxSg2BNfXgph4dcJVKEn5vibyN6iK';
 
+export const FAUCET_ADDRESS = '5DZbNKzPgAnpb5LYfafPx4P3JMeyn1kxyeSJNuoCKddxEbXc';
+
 // works like toFixed but don't round, doesn't support scientific notation
 export const padDecimalPlaces = (origin: number | string, dp: number): string => {
   const _origin = origin.toString();
@@ -79,12 +81,28 @@ export const thousand = (num: number): string => {
   return num.toLocaleString(undefined, { maximumSignificantDigits: 18, minimumFractionDigits: 5 });
 };
 
-export const formatHash = (hash: string): string => {
+export const formatHash = (hash: string, name = false): string => {
   if (hash === LAMINAR_WATCHER_ADDRESS || hash === LAMINAR_SENDER_ADDRESS) {
     return 'Laminar';
   }
 
+  if (hash === FAUCET_ADDRESS) {
+    return 'Faucet';
+  }
+
   return hash.replace(/(\w{6})\w*?(\w{6}$)/, '$1......$2');
+};
+
+export const formatAddress = (address: string): string => {
+  if (address === LAMINAR_WATCHER_ADDRESS || address === LAMINAR_SENDER_ADDRESS) {
+    return 'Laminar';
+  }
+
+  if (address === FAUCET_ADDRESS) {
+    return 'Faucet';
+  }
+
+  return address.replace(/(\w{6})\w*?(\w{6}$)/, '$1......$2');
 };
 
 export const formatBalance = (balance: Fixed18 | Codec | number | string | undefined): Fixed18 => {

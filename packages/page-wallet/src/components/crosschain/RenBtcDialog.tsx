@@ -9,6 +9,7 @@ import { useAccounts } from '@acala-dapp/react-hooks';
 import { RenBtcMintContext } from './RenBtcContext';
 import classes from './RenBtc.module.scss';
 import { ReactComponent as DepositSuccessIcon } from '../../assets/deposit-success.svg';
+import { WalletContext } from '../WalletContext';
 
 export interface RenBtcDialogProps {
   show: boolean;
@@ -50,6 +51,7 @@ const BtcAddressContent: FC<Omit<RenBtcDialogProps, 'show'>> = ({
 
   const handleNext = useCallback(() => {
     if (!active) return;
+
     axios.post(
       'https://apps.acala.network/faucet/ren',
       { address: active.address },
@@ -138,11 +140,11 @@ const SuccessContent: FC<Omit<RenBtcDialogProps, 'show'>> = ({
   btcTxFee,
   renNetworkFee
 }) => {
-  const { setStep } = useContext(RenBtcMintContext);
+  const { changeTab } = useContext(WalletContext);
 
   const handleNext = useCallback(() => {
-    setStep('input');
-  }, [setStep]);
+    changeTab('acala');
+  }, [changeTab]);
 
   return (
     <Grid
@@ -195,14 +197,16 @@ export const RenBtcDialog: FC<RenBtcDialogProps> = ({
   show,
   ...props
 }) => {
-  const { step } = useContext(RenBtcMintContext);
+  const { setStep, step } = useContext(RenBtcMintContext);
 
   return (
     <Dialog
       action={null}
       className={classes.dialog}
+      onCancel={(): void => setStep('confirm')}
       title='Deposit BTC'
       visiable={show}
+      withClose
     >
       {step === 'send' ? <BtcAddressContent {...props}/> : null}
       {step === 'success' ? <SuccessContent {...props}/> : null}

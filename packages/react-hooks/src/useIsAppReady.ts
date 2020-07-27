@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { get, noop } from 'lodash';
+import { get, noop, isEmpty } from 'lodash';
 import { useApi } from './useApi';
 import { useAccounts } from './useAccounts';
 
@@ -14,16 +14,16 @@ interface Options {
  */
 export const useIsAppReady = (options?: Options): { appReadyStatus: boolean } => {
   const [appReadyStatus, setAppReadyStatus] = useState<boolean>(false);
-  const { connected } = useApi();
+  const { api } = useApi();
   const { active: activeAccount } = useAccounts();
 
   useEffect(() => {
-    const status = !!activeAccount && !!activeAccount.address && connected;
+    const status = !!activeAccount && !!activeAccount.address && !isEmpty(api);
 
     // handle onSuccess or onError callback
     (status ? get(options, 'onSuccess', noop) : get(options, 'onError', noop))();
     setAppReadyStatus(status);
-  }, [activeAccount, connected, options]);
+  }, [activeAccount, api, options]);
 
   return { appReadyStatus };
 };

@@ -5,7 +5,7 @@ import { Copy } from '@acala-dapp/ui-components';
 import Identicon from '@polkadot/react-identicon';
 
 import classes from './format.module.scss';
-import { LAMINAR_WATCHER_ADDRESS, LAMINAR_SENDER_ADDRESS } from '../utils';
+import { formatAddress } from '../utils';
 
 interface Props extends BareProps {
   address: string;
@@ -24,17 +24,13 @@ export const FormatAddress: FC<Props> = memo(({
   withIcon = false
 }) => {
   const _address = useMemo<string>((): string => {
-    if (address === LAMINAR_WATCHER_ADDRESS || address === LAMINAR_SENDER_ADDRESS) {
-      return 'Laminar';
-    }
-
     if (withFullAddress) {
       return address;
     }
 
     if (!address) return '';
 
-    return address.replace(/(\w{6})\w*?(\w{6}$)/, '$1......$2');
+    return formatAddress(address);
   }, [address, withFullAddress]);
 
   const renderInner = useCallback(() => {

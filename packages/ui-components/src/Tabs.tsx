@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useState, useEffect, useMemo, Children, useCallback, ReactElement } from 'react';
+import React, { FC, ReactNode, useState, useEffect, useMemo, Children, useCallback, ReactElement, useRef } from 'react';
 import { has, get } from 'lodash';
 import clsx from 'clsx';
 import { Motion, spring, presets } from 'react-motion';
@@ -27,8 +27,7 @@ interface TabsProps extends BareProps {
   className?: string;
   tabClassName?: string;
   defaultKey?: string | number;
-  onChange?: (key: string | number) => void;
-  animation?: boolean;
+  onChange?: (key: string | number | any) => void;
 }
 
 type TabsComponent = FC<TabsProps> & { Panel: FC<PanelProps> };
@@ -46,6 +45,7 @@ const _Tabs: FC<TabsProps> = ({
   const [active, setActive] = useState<string | number>('');
   const rootClass = clsx('aca-tabs', `aca-tabs--${type}`, `aca-tabs--${size}`, className);
   const tabClassF = (active: boolean, disabled?: boolean): string => clsx('aca-tabs__tab', tabClassName, { active: active, disabled: disabled });
+  const defaultKeyCatch = useRef<string | number>();
 
   // extact panels config
   const panels = useMemo<PanelAttr[]>((): PanelAttr[] => {
@@ -94,11 +94,17 @@ const _Tabs: FC<TabsProps> = ({
 
   // set default panel when panels exists and active isn't setted.
   useEffect(() => {
-    if (panels.length > 1 && active === '') {
+    if (panels.length >= 1 && active === '') {
       const key = defaultKey || panels[0].key;
 
       changeActive(key);
     }
+
+    if (defaultKey && defaultKey !== defaultKeyCatch.current) {
+      changeActive(defaultKey);
+    }
+
+    defaultKeyCatch.current = defaultKey;
   }, [active, defaultKey, panels, changeActive]);
 
   return (

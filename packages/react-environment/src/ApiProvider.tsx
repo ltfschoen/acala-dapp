@@ -27,7 +27,6 @@ export const ApiContext = React.createContext<ApiContextData>({} as ApiContextDa
 interface Props {
   endpoint?: string;
   children: ReactNode;
-  ConnectError?: ReactNode;
   Loading?: ReactNode;
 }
 
@@ -36,7 +35,6 @@ interface Props {
  * @description connect chain in the Api Higher-Order Component.
  */
 export const ApiProvider: FC<Props> = ({
-  ConnectError,
   Loading,
   children,
   endpoint
@@ -52,19 +50,9 @@ export const ApiProvider: FC<Props> = ({
       return Loading || null;
     }
 
-    if (connectStatus.connected) {
+    if (JSON.stringify(api) !== '{}') {
       return children;
     }
-
-    return null;
-  };
-
-  const renderError = (): ReactNode => {
-    if (connectStatus.error && ConnectError) {
-      return ConnectError;
-    }
-
-    return null;
   };
 
   useEffect(() => {
@@ -89,7 +77,7 @@ export const ApiProvider: FC<Props> = ({
       timeout(MAX_CONNECT_TIME)
     ).subscribe({
       error: (): void => {
-        // setConnectStatus({ connected: false, error: true, loading: false });
+        setConnectStatus({ connected: false, error: true, loading: false });
       },
       next: (result): void => {
         setApi(result);
@@ -111,13 +99,15 @@ export const ApiProvider: FC<Props> = ({
   useEffect(() => {
     if (!connectStatus.connected) return;
 
-    // disable error check
-    // api.on('disconnected', () => {
-    //   setConnectStatus({ connected: false, error: true, loading: false });
-    // });
-    // api.on('error', () => {
-    //   setConnectStatus({ connected: false, error: true, loading: false });
-    // });
+    api.on('disconnected', () => {
+      setConnectStatus({ connected: false, error: true, loading: false });
+    });
+    api.on('error', () => {
+      setConnectStatus({ connected: false, error: true, loading: false });
+    });
+    api.on('connected', () => {
+      setConnectStatus({ connected: true, error: false, loading: false });
+    });
 
     return (): void => api.disconnect();
   }, [api, connectStatus]);
@@ -131,7 +121,6 @@ export const ApiProvider: FC<Props> = ({
       }}
     >
       {renderContent()}
-      {renderError()}
     </ApiContext.Provider>
   );
 };
