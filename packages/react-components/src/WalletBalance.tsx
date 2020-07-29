@@ -19,39 +19,41 @@ export const Balance: FC<BalanceProps> = ({ className, currency }) => {
 
   return (
     <div className={className}>
-      <TokenImage
-        className={classes.image}
-        currency={currency}
-      />
-      <div className={classes.content}>
-        <TokenName
-          className={classes.name}
+      <div className={classes.inner}>
+        <TokenImage
+          className={classes.image}
           currency={currency}
         />
-        <UserAssetBalance
-          className={classes.balance}
-          currency={currency}
-          maxDecimalLength={2}
-          withTooltip={true}
-        />
-        <Condition
-          condition={tokenEq(currency, liquidCurrency)}
-          or={
-            <UserAssetValue
-              className={classes.amount}
-              currency={currency}
-              maxDecimalLength={2}
-              prefix='≈US $'
-              withTooltip={true}
-            />
-          }>
-          <StakingPoolExchangeRate
-            className={classes.amount}
-            liquidAmount={liquidBalance}
-            maxDecimalLength={2}
-            showLiquidAmount={false}
+        <div className={classes.content}>
+          <TokenName
+            className={classes.name}
+            currency={currency}
           />
-        </Condition>
+          <UserAssetBalance
+            className={classes.balance}
+            currency={currency}
+            maxDecimalLength={2}
+            withTooltip={true}
+          />
+          <Condition
+            condition={tokenEq(currency, liquidCurrency)}
+            or={
+              <UserAssetValue
+                className={classes.amount}
+                currency={currency}
+                maxDecimalLength={2}
+                prefix='≈US $'
+                withTooltip={true}
+              />
+            }>
+            <StakingPoolExchangeRate
+              className={classes.amount}
+              liquidAmount={liquidBalance}
+              maxDecimalLength={2}
+              showLiquidAmount={false}
+            />
+          </Condition>
+        </div>
       </div>
     </div>
   );

@@ -28,6 +28,8 @@ const AssetCard: FC<AssetCardProps> = ({ className, currency }) => {
 
   return (
     <div className={clsx(className, classes.assetCard)}>
+      <div className={classes.inner}>
+      </div>
       <div className={classes.header}>
         <TokenImage
           className={classes.tokenImage}

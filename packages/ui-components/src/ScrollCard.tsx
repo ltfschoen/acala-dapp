@@ -71,21 +71,34 @@ export const _ScrollCard: FC<ScrollCardProps> = ({ children, itemClassName, page
   }, [maxPage, move]);
 
   useEffect(() => {
-    if (!$rootRef.current) return;
+    const inner = (): void => {
+      if (!$rootRef.current) return;
 
-    const $root = $rootRef.current;
-    const $items = $root.querySelectorAll('.aca-scroll-card__item');
+      const $root = $rootRef.current;
+      const $container = $root.querySelector('.aca-scroll-card__container');
+      const $items = $root.querySelectorAll('.aca-scroll-card__item');
 
-    const _itemWidth = `${100 / pageSize}%`;
+      const _itemWidth = Number($root.clientWidth) / pageSize - 48;
 
-    // set items width;
-    $items.forEach((item) => {
-      (item as HTMLDivElement).style.width = _itemWidth;
-      (item as HTMLDivElement).style.flex = `0 0 ${_itemWidth}`;
-    });
+      // set items width;
+      ($container as HTMLDivElement).style.display = 'none';
+      $root.style.width = $root.clientWidth + 'px';
+      ($container as HTMLDivElement).style.width = _itemWidth * $items.length + 'px';
+      $items.forEach((item) => {
+        (item as HTMLDivElement).style.width = _itemWidth + 'px';
+        (item as HTMLDivElement).style.flex = `0 0 ${_itemWidth}px`;
+      });
+      ($container as HTMLDivElement).style.display = 'flex';
 
-    // set max page size
-    setMaxPage(Math.floor($items.length / pageSize));
+      // set max page size
+      setMaxPage(Math.floor($items.length / pageSize));
+    };
+
+    inner();
+
+    window.addEventListener('resize', inner);
+
+    return (): void => window.removeEventListener('resize', inner);
   }, [$rootRef, setMaxPage, pageSize]);
 
   return (
@@ -115,7 +128,9 @@ export const _ScrollCard: FC<ScrollCardProps> = ({ children, itemClassName, page
       headerClassName='aca-scroll-card__header'
       ref={$rootRef}
     >
-      {content}
+      <div className='aca-scroll-card__container'>
+        {content}
+      </div>
     </Card>
   );
 };

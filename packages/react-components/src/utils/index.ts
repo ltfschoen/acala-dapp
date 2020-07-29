@@ -78,7 +78,11 @@ export const effectiveDecimal = (origin: number | string, dp: number, maxDecimal
 };
 
 export const thousand = (num: number): string => {
-  return num.toLocaleString(undefined, { maximumSignificantDigits: 18, minimumFractionDigits: 5 });
+  const _num = num.toString();
+  const [i, d] = _num.split('.');
+  const reg = /(?!\b)(?=(\d{3})+\b)/g;
+
+  return i.replace(reg, ',') + (d ? '.' + d : '');
 };
 
 export const formatHash = (hash: string, name = true): string => {

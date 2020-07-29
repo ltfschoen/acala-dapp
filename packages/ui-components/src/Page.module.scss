@@ -2,7 +2,6 @@
 
 .page {
   box-sizing: border-box;
-  width: 100%;
   max-height: 100vh;
   min-height: 100vh;
   overflow-y: auto;
@@ -25,7 +24,6 @@
 }
 
 .pageContent {
-  max-width: 1120px;
   margin-top: 16px;
 
   &.fullscreen {

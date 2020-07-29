@@ -3,8 +3,11 @@
   justify-content: space-between;
 }
 
-.aca-scroll-card__content {
+.aca-scroll-card__container {
   display: flex;
+}
+
+.aca-scroll-card__content {
   overflow-y: auto;
   margin-bottom: 4px;
 
