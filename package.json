@@ -5,6 +5,11 @@
   "workspaces": [
     "packages/*"
   ],
+  "engines": {
+    "node": "12.x",
+    "npm": "6.x",
+    "yarn": "1.x"
+  },
   "resolutions": {
     "@polkadot/api": "^1.15.1",
     "@acala-network/api": "^0.3.1",
