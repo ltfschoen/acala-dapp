@@ -77,7 +77,7 @@ const InputStep: FC = () => {
               className={clsx(classes.item, classes.destination)}
               label='From'
               value={
-                <div>BTC NetWork</div>
+                <div>BTC Network</div>
               }
             />
             <List.Item
