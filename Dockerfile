@@ -1,38 +1,33 @@
-# Use latest Node.js LTS from Docker Hub
+# docker build --tag acala:tc4 .
+# docker images
+# docker stop acala-tc4
+# docker rm acala-tc4
+# docker run -p 3000:3000 -d --name acala-tc4 acala:tc4
+# docker ps -a
+# docker logs acala-tc4
+# docker exec -it acala-tc4 /bin/bash
+
 FROM node:12
 
-# Fetch Yarn
+WORKDIR /app
+
 RUN curl -o- -L https://yarnpkg.com/install.sh | bash
-# Configure non-root user 'app'
-RUN useradd --user-group --create-home --shell /bin/false app
-
-# Configure Yarn path
 ENV PATH=/root/.yarn/bin:$PATH
-# Configure user path
-ENV HOME=/home/app
+ENV SKIP_PREFLIGHT_CHECK=true
 
-# Copy only package configuration to leverage cached Docker layers
-# Wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json yarn.lock $HOME/
-# Change ownership recursively to belong to the user
-RUN chown -R app $HOME/*
+COPY package.json .
+RUN yarn install && \
+  yarn add customize-cra -W && \
+  npm i -g recursive-install && \
+  npm-recursive-install --skip-root
 
-# Set the non-root user
-USER app
-# Create directory to hold application code inside the Docker image
-WORKDIR $HOME
-# Install dependencies
-RUN yarn
+COPY . .
 
-# Set root user
-USER root
-# Bundle source code inside the Docker image
-COPY . $HOME
-RUN chown -R app $HOME/*
+RUN apt-get update && \
+  apt-get install -y apt-file && \
+  apt-file update && \
+  apt-get install -y libusb-1.0
 
-# Map port 3000 using Docker daemon since that's what the app binds to
-EXPOSE 3000
 
-USER app
-# CMD ["yarn", "start:dapp"]
+# ENTRYPOINT ["tail", "-f", "/dev/null"]
+CMD ["yarn", "run", "start:dapp"]
