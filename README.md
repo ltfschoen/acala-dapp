@@ -30,3 +30,29 @@ acala web app with honzon, homa, dex features.
    ```base
    yarn run start
    ```
+
+## Docker
+
+1. Install and run Docker
+
+2. Build Docker image and Docker container
+
+```bash
+docker build --tag acala:tc4 .
+docker run -p 3000:3000 -d --name acala-tc4 acala:tc4
+```
+
+3. Inspect whether the Docker container has compiled and served acala-dapp until it says `Compiled successfully!`
+
+```bash
+docker logs acala-tc4
+```
+
+4. Interact with acala-dapp in a web browser at http://localhost:3000
+
+### Troubleshooting:
+
+* View the Docker images: `docker images`
+* View the Docker containers: `docker ps -a`
+* Enter the Shell of the Docker container: `docker exec -it acala-tc4 /bin/bash`
+* Stop and remove the Docker container: `docker stop acala-tc4 && docker rm acala-tc4`
