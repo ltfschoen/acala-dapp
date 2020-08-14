@@ -111,7 +111,7 @@ export const WithdrawNoDebitLoan: FC = () => {
             params={params}
             section='honzon'
             size='small'
-          >Widthdraw Collateral</TxButton>
+          >Withdraw Collateral</TxButton>
         );
       },
       title: '',
